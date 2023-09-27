@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.0.0...v1.0.1) (2023-09-27)
+
+
+### 🐛 Bug Fixes
+
+* incorrect k3d configuration ([582ac3e](https://github.com/AtomiCloud/sulfoxide.silicon/commit/582ac3e5f7e1867ccd8963b69108bbeec0045bcf))
+
 ## 1.0.0 (2023-09-27)
 
 
