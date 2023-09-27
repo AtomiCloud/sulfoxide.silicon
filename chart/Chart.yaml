@@ -1,9 +1,6 @@
 apiVersion: v2
 name: atomi-otel-collectors
 description: Helm chart to deploy OTEL Collectors
-
 type: application
-
 version: 1.0.0
-
 appVersion: "0.1.0"
