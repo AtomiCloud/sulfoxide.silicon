@@ -1,0 +1,116 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+processors:
+  batch:
+  k8sattributes:
+    auth_type: "serviceAccount"
+    passthrough: false
+    filter:
+      node_from_env_var: KUBE_NODE_NAME
+    extract:
+      metadata:
+        - k8s.pod.name
+        - k8s.pod.uid
+        - k8s.deployment.name
+        - k8s.daemonset.name
+        - k8s.statefulset.name
+        - k8s.replicaset.name
+        - k8s.job.name
+        - k8s.cronjob.name
+        - k8s.namespace.name
+        - k8s.node.name
+      annotations:
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+      labels:
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+    pod_association:
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.ip
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.uid
+      - sources:
+          - from: connection
+  attributes:
+    actions:
+      - key: container.id
+        action: delete
+      - key: otel.source
+        action: insert
+        value: otlp
+  resource:
+    attributes:
+      - key: container.id
+        action: delete
+      - key: k8s.cluster
+        action: insert
+        value: ${env:CLUSTER}
+exporters:
+  prometheusremotewrite:
+    endpoint: ${env:MIMIR_ENDPOINT}
+    resource_to_telemetry_conversion:
+      enabled: true
+    auth:
+      authenticator: basicauth/mimir
+  otlphttp:
+    endpoint: ${env:TEMPO_ENDPOINT}
+    auth:
+      authenticator: basicauth/tempo
+  logging:
+
+extensions:
+  health_check:
+  pprof:
+  zpages:
+    endpoint: 0.0.0.0:55679
+  basicauth/mimir:
+    client_auth:
+      username: ${env:MIMIR_USER}
+      password: ${env:MIMIR_PASSWORD}
+  basicauth/tempo:
+    client_auth:
+      username: ${env:TEMPO_USER}
+      password: ${env:TEMPO_PASSWORD}
+service:
+  extensions: [ health_check, pprof, zpages, basic_auth/mimir, basic_auth/tempo ]
+  pipelines:
+    traces:
+      receivers: [ otlp ]
+      processors: [ k8sattributes, resource, attributes, batch ]
+      exporters: [ otlphttp ]
+    metrics:
+      receivers: [ otlp ]
+      processors: [ k8sattributes, resource, attributes, batch ]
+      exporters: [ prometheusremotewrite ] # mimir

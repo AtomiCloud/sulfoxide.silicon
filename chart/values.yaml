@@ -1,0 +1,443 @@
+serviceTree:
+  landscape: pichu
+  cluster: opal
+  platform: systems
+  service: telemetry-collector
+  layer: "1"
+
+cluster: opal
+
+loki: https://logs-prod-011.grafana.net/loki/api/v1/push
+
+tempo: https://tempo-prod-07-prod-ap-southeast-0.grafana.net/tempo
+  
+mimir: https://prometheus-prod-18-prod-ap-southeast-0.grafana.net/api/prom/push
+  
+configMapName: otel-common-config-map
+
+k8sattr:
+  createRole: true
+  bind:
+    - otel-collector-kubelet-sa
+    - otel-otlp-collector
+    - otel-otlp-logs-collector
+    - otel-container-logs-collector
+    - otel-collector-k8scluster-sa
+    - otel-zipkin-collector
+ta:
+  createRole: true
+  serviceAccount:
+    create: true
+    name: otel-collector-ta-sa
+
+k8sevents:
+  createRole: true
+  serviceAccount:
+    create: true
+    name: otel-collector-k8sevents-sa
+
+k8scluster:
+  createRole: true
+  serviceAccount:
+    create: true
+    name: otel-collector-k8scluster-sa
+
+kubelet:
+  createRole: true
+  serviceAccount:
+    create: true
+    name: otel-collector-kubelet-sa
+
+apps:
+  target-allocator:
+    collector: ta.yaml
+    spec:
+      mode: statefulset
+      envFrom:
+        - secretRef:
+            name: grafana-cloud-secrets
+        - configMapRef:
+            name: otel-common-config-map
+      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
+      nodeSelector: { }
+      podAnnotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+        atomi.cloud/landscape: pichu
+        atomi.cloud/cluster: opal
+        atomi.cloud/platform: systems
+        atomi.cloud/service: telemetry-collector
+        atomi.cloud/module: target-allocator-collector
+        atomi.cloud/layer: "1"
+      targetAllocator:
+        enabled: true
+        serviceAccount: otel-collector-ta-sa
+        prometheusCR:
+          enabled: true
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 100m
+          memory: 256Mi
+      podSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        capabilities:
+          drop:
+            - ALL
+
+  otlp:
+    collector: otlp.yaml
+    spec:
+      mode: daemonset
+      env:
+        - name: KUBE_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
+      nodeSelector: { }
+      podAnnotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+        atomi.cloud/landscape: pichu
+        atomi.cloud/cluster: opal
+        atomi.cloud/platform: systems
+        atomi.cloud/service: telemetry-collector
+        atomi.cloud/module: otlp-collector
+        atomi.cloud/layer: "1"
+      ports:
+        - port: 55679
+          targetPort: 55679
+          name: zpages
+      envFrom:
+        - secretRef:
+            name: grafana-cloud-secrets
+        - configMapRef:
+            name: otel-common-config-map
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 128Mi
+      podSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        capabilities:
+          drop:
+            - ALL
+
+  otlp-logs:
+    collector: otlp-logs.yaml
+    spec:
+      mode: daemonset
+      env:
+        - name: KUBE_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
+      nodeSelector: { }
+      podAnnotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+        atomi.cloud/landscape: pichu
+        atomi.cloud/cluster: opal
+        atomi.cloud/platform: systems
+        atomi.cloud/service: telemetry-collector
+        atomi.cloud/module: otlp-collector
+        atomi.cloud/layer: "1"
+      ports:
+        - port: 55679
+          targetPort: 55679
+          name: zpages
+      envFrom:
+        - secretRef:
+            name: grafana-cloud-secrets
+        - configMapRef:
+            name: otel-common-config-map
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 128Mi
+      podSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        capabilities:
+          drop:
+            - ALL
+
+  kubelet-stats:
+    collector: kubelet-stats.yaml
+    spec:
+      mode: daemonset
+      envFrom:
+        - secretRef:
+            name: grafana-cloud-secrets
+        - configMapRef:
+            name: otel-common-config-map
+      serviceAccount: otel-collector-kubelet-sa
+      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
+      ports:
+        - port: 55679
+          targetPort: 55679
+          name: zpages
+      podAnnotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+        atomi.cloud/landscape: pichu
+        atomi.cloud/cluster: opal
+        atomi.cloud/platform: systems
+        atomi.cloud/service: telemetry-collector
+        atomi.cloud/module: kubelet-stats-collector
+        atomi.cloud/layer: "1"
+      env:
+        - name: K8S_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: KUBE_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+      nodeSelector: { }
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 128Mi
+      podSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        capabilities:
+          drop:
+            - ALL
+
+  container-logs:
+    collector: container-logs.yaml
+    spec:
+      mode: daemonset
+      envFrom:
+        - secretRef:
+            name: grafana-cloud-secrets
+        - configMapRef:
+            name: otel-common-config-map
+      env:
+        - name: KUBE_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
+      ports:
+        - port: 55679
+          targetPort: 55679
+          name: zpages
+      podAnnotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+        atomi.cloud/landscape: pichu
+        atomi.cloud/cluster: opal
+        atomi.cloud/platform: systems
+        atomi.cloud/service: telemetry-collector
+        atomi.cloud/module: container-logs-collector
+        atomi.cloud/layer: "1"
+      resources:
+        limits:
+          cpu: 1
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 256Mi
+      volumeMounts:
+        - name: varlogpods
+          mountPath: /var/log/pods
+          readOnly: true
+        - name: varlibdockercontainers
+          mountPath: /var/lib/docker/containers
+          readOnly: true
+      volumes:
+        - name: varlogpods
+          hostPath:
+            path: /var/log/pods
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+      podSecurityContext:
+        runAsNonRoot: false
+      securityContext: { }
+
+  k8s-cluster:
+    collector: k8s-cluster.yaml
+    spec:
+      mode: deployment
+      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
+      env:
+      envFrom:
+        - secretRef:
+            name: grafana-cloud-secrets
+        - configMapRef:
+            name: otel-common-config-map
+      ports:
+        - port: 55679
+          targetPort: 55679
+          name: zpages
+      podAnnotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+        atomi.cloud/landscape: pichu
+        atomi.cloud/cluster: opal
+        atomi.cloud/platform: systems
+        atomi.cloud/service: telemetry-collector
+        atomi.cloud/module: cluster-metrics-collector
+        atomi.cloud/layer: "1"
+      nodeSelector: { }
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        capabilities:
+          drop:
+            - ALL
+      serviceAccount: otel-collector-k8scluster-sa
+
+  k8s-events:
+    collector: k8s-events.yaml
+    spec:
+      mode: deployment
+      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
+      ports:
+        - port: 55679
+          targetPort: 55679
+          name: zpages
+      envFrom:
+        - secretRef:
+            name: grafana-cloud-secrets
+        - configMapRef:
+            name: otel-common-config-map
+      podAnnotations:
+        argocd.argoproj.io/compare-options: IgnoreExtraneous
+        atomi.cloud/landscape: pichu
+        atomi.cloud/cluster: opal
+        atomi.cloud/platform: systems
+        atomi.cloud/service: telemetry-collector
+        atomi.cloud/module: cluster-events-collector
+        atomi.cloud/layer: "1"
+      nodeSelector: { }
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        capabilities:
+          drop:
+            - ALL
+      serviceAccount: otel-collector-k8sevents-sa
+
+auth:
+  secretName: grafana-cloud-secrets
+  mimir:
+    user:
+      local: MIMIR_USER
+      remote: MIMIR_USER
+    password:
+      local: MIMIR_PASSWORD
+      remote: MIMIR_PASSWORD
+  loki:
+    user:
+      local: LOKI_USER
+      remote: LOKI_USER
+    password:
+      local: LOKI_PASSWORD
+      remote: LOKI_PASSWORD
+  tempo:
+    user:
+      local: TEMPO_USER
+      remote: TEMPO_USER
+    password:
+      local: TEMPO_PASSWORD
+      remote: TEMPO_PASSWORD
+  internal:
+    enable: false
+    mimir:
+      user: ""
+      password: ""
+    loki:
+      user: ""
+      password: ""
+    tempo:
+      user: ""
+      password: ""
+  external:
+    enable: true
+    remoteSecretName: dev/cloudflare-tunnel/token
+    secretStore:
+      name: aws-ssm-secret-store
+      kind: ClusterSecretStore
+    policy:
+      creation: Owner
+      deletion: Retain

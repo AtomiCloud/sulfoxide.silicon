@@ -1,0 +1,116 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+processors:
+  batch:
+  k8sattributes:
+    auth_type: "serviceAccount"
+    passthrough: false
+    filter:
+      node_from_env_var: KUBE_NODE_NAME
+    extract:
+      metadata:
+        - k8s.pod.name
+        - k8s.pod.uid
+        - k8s.deployment.name
+        - k8s.daemonset.name
+        - k8s.statefulset.name
+        - k8s.replicaset.name
+        - k8s.job.name
+        - k8s.cronjob.name
+        - k8s.namespace.name
+        - k8s.node.name
+      annotations:
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+      labels:
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+    pod_association:
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.ip
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.uid
+      - sources:
+          - from: connection
+  attributes:
+    actions:
+      - key: container.id
+        action: delete
+      - key: otel.source
+        action: insert
+        value: otlp
+      - action: insert
+        key: loki.attribute.labels
+        value: otel.source, Method, StatusCode, Scheme
+  resource:
+    attributes:
+      - key: container.id
+        action: delete
+      - key: k8s.cluster
+        action: insert
+        value: ${env:CLUSTER}
+      - action: insert
+        key: loki.resource.labels
+        value: >-
+          module, landscape, platform, service
+          k8s.cluster, k8s.container.name, k8s.namespace.name, k8s.node.name, 
+          k8s.deployment.name, k8s.statefulset.name, k8s.daemonset.name, 
+          k8s.cronjob.name
+exporters:
+  logging:
+  loki:
+    endpoint: ${env:LOKI_ENDPOINT}
+    auth:
+      authenticator: basicauth/loki
+
+extensions:
+  health_check:
+  pprof:
+  zpages:
+    endpoint: 0.0.0.0:55679
+  basicauth/loki:
+    client_auth:
+      username: ${env:LOKI_USER}
+      password: ${env:LOKI_PASSWORD}
+
+service:
+  telemetry:
+    logs:
+      level: "debug"
+  extensions: [ health_check, pprof, zpages, basicauth/loki ]
+  pipelines:
+    logs:
+      receivers: [ otlp ]
+      processors: [ k8sattributes, resource, attributes, batch ]
+      exporters: [ loki ]

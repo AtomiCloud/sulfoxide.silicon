@@ -1,0 +1,97 @@
+{{- if .Values.ta.createRole -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: "{{ .Release.Name }}-opentelemetry-targetallocator-cr-role"
+  labels:
+    {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
+  annotations:
+    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+rules:
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - servicemonitors
+      - podmonitors
+    verbs:
+      - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: "{{.Release.Name }}-opentelemetry-targetallocator-role"
+  labels:
+    {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
+  annotations:
+    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+rules:
+  - apiGroups: [ "" ]
+    resources:
+      - nodes
+      - nodes/metrics
+      - services
+      - endpoints
+      - pods
+    verbs: [ "get", "list", "watch" ]
+  - apiGroups: [ "" ]
+    resources:
+      - configmaps
+    verbs: [ "get" ]
+  - apiGroups:
+      - discovery.k8s.io
+    resources:
+      - endpointslices
+    verbs: [ "get", "list", "watch" ]
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - ingresses
+    verbs: [ "get", "list", "watch" ]
+  - nonResourceURLs: [ "/metrics" ]
+    verbs: [ "get" ]
+---
+{{- end -}}
+{{- if and .Values.ta.createRole .Values.ta.serviceAccount.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{.Release.Name }}-opentelemetry-targetallocator-cr-rolebinding
+  labels:
+      {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
+  annotations:
+    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{.Release.Name }}-opentelemetry-targetallocator-cr-role
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.ta.serviceAccount.name }}
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{.Release.Name }}-opentelemetry-targetallocator-rolebinding
+  labels:
+    {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
+  annotations:
+    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{.Release.Name }}-opentelemetry-targetallocator-role
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.ta.serviceAccount.name }}
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.ta.serviceAccount.name }}
+  labels:
+      {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
+  annotations:
+    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+{{- end -}}

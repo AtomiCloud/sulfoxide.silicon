@@ -1,0 +1,105 @@
+receivers:
+  k8s_cluster:
+    collection_interval: 5s
+    node_conditions_to_report:
+      - Ready
+      - MemoryPressure
+      - DiskPressure
+      - PIDPressure
+      - NetworkUnavailable
+    allocatable_types_to_report:
+      - cpu
+      - memory
+      - ephemeral-storage
+      - storage
+
+processors:
+  batch:
+  attributes:
+    actions:
+      - key: container.id
+        action: delete
+      - key: otel.source
+        action: insert
+        value: k8s-cluster
+  resource:
+    attributes:
+      - key: container.id
+        action: delete
+      - key: k8s.cluster
+        action: insert
+        value: ${env:CLUSTER}
+  k8sattributes:
+    auth_type: "serviceAccount"
+    passthrough: false
+    extract:
+      metadata:
+        - k8s.pod.name
+        - k8s.pod.uid
+        - k8s.deployment.name
+        - k8s.daemonset.name
+        - k8s.statefulset.name
+        - k8s.replicaset.name
+        - k8s.job.name
+        - k8s.cronjob.name
+        - k8s.namespace.name
+        - k8s.node.name
+      annotations:
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+      labels:
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+    pod_association:
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.uid
+exporters:
+  prometheusremotewrite:
+    endpoint: ${env:MIMIR_ENDPOINT}
+    resource_to_telemetry_conversion:
+      enabled: true
+    auth:
+      authenticator: basicauth/mimir
+extensions:
+  health_check:
+  pprof:
+  zpages:
+    endpoint: 0.0.0.0:55679
+  basicauth/mimir:
+    client_auth:
+      username: ${env:MIMIR_USER}
+      password: ${env:MIMIR_PASSWORD}
+service:
+  extensions: [health_check, pprof, zpages, basic_auth/mimir]
+  pipelines:
+    metrics:
+      receivers: [k8s_cluster]
+      processors: [batch, k8sattributes, resource, attributes]
+      exporters: [prometheusremotewrite] # mimir

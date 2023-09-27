@@ -1,0 +1,47 @@
+{{- if .Values.kubelet.createRole -}}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: "{{ .Release.Name }}-otel-kubelet"
+  labels:
+      {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
+  annotations:
+    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - "*"
+    verbs:
+      - get
+      - list
+      - watch
+---
+{{- end -}}
+{{- if and .Values.kubelet.createRole .Values.kubelet.serviceAccount.create }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{.Release.Name }}-otel-kubelet
+  labels:
+      {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
+  annotations:
+    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: "{{ .Release.Name }}-otel-kubelet"
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.kubelet.serviceAccount.name }}
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.kubelet.serviceAccount.name }}
+  labels:
+      {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
+  annotations:
+    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+{{- end -}}

@@ -1,0 +1,105 @@
+receivers:
+  kubeletstats:
+    collection_interval: 5s
+    auth_type: "serviceAccount"
+    endpoint: "https://${env:K8S_NODE_NAME}:10250"
+    insecure_skip_verify: true
+    extra_metadata_labels:
+      - container.id
+    metric_groups:
+      - node
+      - pod
+      - volume
+      - container
+
+processors:
+  batch:
+  attributes:
+    actions:
+      - key: otel.source
+        action: insert
+        value: kubelet-stats
+  resource:
+    attributes:
+      - key: k8s.cluster
+        action: insert
+        value: ${env:CLUSTER}
+  k8sattributes:
+    auth_type: "serviceAccount"
+    passthrough: false
+    filter:
+      node_from_env_var: KUBE_NODE_NAME
+    extract:
+      metadata:
+        - k8s.pod.name
+        - k8s.pod.uid
+        - k8s.deployment.name
+        - k8s.daemonset.name
+        - k8s.statefulset.name
+        - k8s.replicaset.name
+        - k8s.job.name
+        - k8s.cronjob.name
+        - k8s.namespace.name
+        - k8s.node.name
+      annotations:
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+      labels:
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+    pod_association:
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.ip
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.uid
+      - sources:
+          - from: connection
+exporters:
+  prometheusremotewrite:
+    endpoint: ${env:MIMIR_ENDPOINT}
+    resource_to_telemetry_conversion:
+      enabled: true
+    auth:
+      authenticator: basicauth/mimir
+
+extensions:
+  health_check:
+  pprof:
+  zpages:
+    endpoint: 0.0.0.0:55679
+  basicauth/mimir:
+    client_auth:
+      username: ${env:MIMIR_USER}
+      password: ${env:MIMIR_PASSWORD}
+service:
+  extensions: [ health_check, pprof, zpages, basic_auth/mimir ]
+  pipelines:
+    metrics:
+      receivers: [kubeletstats]
+      processors: [batch, k8sattributes, attributes, resource]
+      exporters: [prometheusremotewrite] # mimir

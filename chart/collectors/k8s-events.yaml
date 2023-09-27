@@ -1,0 +1,46 @@
+receivers:
+  k8s_events:
+
+exporters:
+  loki:
+    endpoint: ${env:LOKI_ENDPOINT}
+    auth:
+      authenticator: basicauth/loki
+  logging:
+
+extensions:
+  health_check:
+  pprof:
+  zpages:
+    endpoint: 0.0.0.0:55679
+  basicauth/loki:
+    client_auth:
+      username: ${env:LOKI_USER}
+      password: ${env:LOKI_PASSWORD}
+processors:
+  batch:
+  attributes:
+    actions:
+      - key: otel.source
+        action: insert
+        value: k8s-events
+      - action: insert
+        key: loki.attribute.labels
+        value: otel.source, k8s.namespace.name
+  resource:
+    attributes:
+      - key: k8s.cluster
+        action: insert
+        value: ${env:CLUSTER}
+      - action: insert
+        key: loki.resource.labels
+        value: >-
+          k8s.cluster, k8s.object.name
+
+service:
+  extensions: [ health_check, pprof, zpages, basicauth/loki ]
+  pipelines:
+    logs:
+      receivers: [k8s_events]
+      processors: [batch, attributes, resource]
+      exporters: [loki]
