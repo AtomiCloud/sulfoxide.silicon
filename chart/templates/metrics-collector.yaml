@@ -3,10 +3,8 @@ apiVersion: opentelemetry.io/v1alpha1
 kind: OpenTelemetryCollector
 metadata:
   name: {{ $.Release.Name }}-{{ $k }}
-  labels:
-    {{- include "atomi-otel-collectors.labels" $  | nindent 4 }}
-  annotations:
-    {{- include "atomi-otel-collectors.annotations" $  | nindent 4 }}
+  labels: {{- include "sulfoxide-silicon.labels" $  | nindent 4 }}
+  annotations: {{- include "sulfoxide-silicon.annotations" $  | nindent 4 }}
 spec:
   {{ $v.spec | toYaml | nindent 2 }}
   config: |

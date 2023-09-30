@@ -1,76 +1,210 @@
+# -- AtomiCloud Service Tree. See [ServiceTree](https://atomicloud.larksuite.com/wiki/OkfJwTXGFiMJkrk6W3RuwRrZs64?theme=DARK&contentTheme=DARK#MHw5d76uDo2tBLx86cduFQMRsBb)
 serviceTree:
-  landscape: pichu
-  cluster: opal
-  platform: systems
-  service: telemetry-collector
-  layer: "1"
+  platform: &platform sulfoxide
+  service: &service silicon
+  layer: &layer "1"
 
+
+# -- Kubernetes labels and annotations, following Service Tree
+tags: &tags
+  argocd.argoproj.io/compare-options: IgnoreExtraneous
+  atomi.cloud/platform: *platform
+  atomi.cloud/service: *service
+  atomi.cloud/layer: *layer
+
+
+# -- Cluster the operators are deployed to
 cluster: opal
 
+# -- Loki endpoint for logs
 loki: https://logs-prod-011.grafana.net/loki/api/v1/push
 
+# -- Tempo endpoint for traces
 tempo: https://tempo-prod-07-prod-ap-southeast-0.grafana.net/tempo
-  
-mimir: https://prometheus-prod-18-prod-ap-southeast-0.grafana.net/api/prom/push
-  
-configMapName: otel-common-config-map
 
+# -- Mimir endpoint for metrics
+mimir: https://prometheus-prod-18-prod-ap-southeast-0.grafana.net/api/prom/push
+
+# -- Name of the common config map to propagate to all collectors
+configMapName: &configMapName otel-common-config-map
+
+# -- Configuration for k8sattr extension
 k8sattr:
+  # -- Enable creation k8sattr role
   createRole: true
+  # -- Service accounts to bind the k8sattr roles to
   bind:
     - otel-collector-kubelet-sa
     - otel-otlp-collector
     - otel-otlp-logs-collector
     - otel-container-logs-collector
     - otel-collector-k8scluster-sa
-    - otel-zipkin-collector
+
+# -- Configuration for Target Allocator
 ta:
+  # -- Enable creation of target allocator roles
   createRole: true
+  # -- Service account for target allocation
   serviceAccount:
+    # -- Enable creation of the service account
     create: true
-    name: otel-collector-ta-sa
+    # -- Name of the service account
+    name: &taSA otel-collector-ta-sa
 
+# -- Configuration for K8S Event Collector
 k8sevents:
+  # -- Enable creation of k8s events role
   createRole: true
+  # -- Service account for k8s events
   serviceAccount:
+    # -- Enable creation of the service account
     create: true
-    name: otel-collector-k8sevents-sa
+    # -- Name of the service account
+    name: &k8seventsSA otel-collector-k8sevents-sa
 
+# -- Configuration for K8S Cluster Collector
 k8scluster:
+  # -- Enable creation of k8s cluster role
   createRole: true
+  # -- Service account for k8s cluster
   serviceAccount:
+    # -- Enable creation of the service account
     create: true
-    name: otel-collector-k8scluster-sa
+    # -- Name of the service account
+    name: &k8sclusterSA otel-collector-k8scluster-sa
 
+# -- Configuration for Kubelet Collector
 kubelet:
+  # -- Enable creation of kubelet role
   createRole: true
+  # -- Service account for kubelet
   serviceAccount:
+    # -- Enable creation of the service account
     create: true
-    name: otel-collector-kubelet-sa
+    # -- Name of the service account
+    name: &kubeletSA otel-collector-kubelet-sa
 
+# -- Create SecretStore via secret of secrets pattern
+sulfoxide-bromine:
+  # -- Store name to create
+  storeName: doppler
+  # -- Secret of Secrets reference
+  rootSecret:
+    # -- DOPPLER Token Reference
+    ref: "SULFOXIDE_SILICON"
+
+# -- Auth configuration for the collectors
+auth:
+  # -- Name of the secret to use for the collector
+  secretName: &secretName grafana-cloud-secrets
+  # -- Mimir auth configuration
+  mimir:
+    # -- Username for Mimir
+    user:
+      # -- Local Key reference
+      local: MIMIR_USER
+      # -- Remote Key reference
+      remote: MIMIR_USER
+    # -- Password for Mimir
+    password:
+      # -- Local Key reference
+      local: MIMIR_PASSWORD
+      # -- Remote Key reference
+      remote: MIMIR_PASSWORD
+  # -- Loki auth configuration
+  loki:
+    # -- Username for Loki
+    user:
+      # -- Local Key reference
+      local: LOKI_USER
+      # -- Remote Key reference
+      remote: LOKI_USER
+    # -- Password for Loki
+    password:
+      # -- Local Key reference
+      local: LOKI_PASSWORD
+      # -- Remote Key reference
+      remote: LOKI_PASSWORD
+  # -- Tempo auth configuration
+  tempo:
+    # -- Username for Tempo
+    user:
+      # -- Local Key reference
+      local: TEMPO_USER
+      # -- Remote Key reference
+      remote: TEMPO_USER
+    # -- Password for Tempo
+    password:
+      # -- Local Key reference
+      local: TEMPO_PASSWORD
+      # -- Remote Key reference
+      remote: TEMPO_PASSWORD
+  # -- Use internal auth for the collectors (hard coded password)
+  internal:
+    # -- Enable internal auth
+    enable: false
+    mimir:
+      # -- Username for Mimir
+      user: ""
+      # -- Password for Mimir
+      password: ""
+    loki:
+      # -- Username for Loki
+      user: ""
+      # -- Password for Loki
+      password: ""
+    tempo:
+      # -- Username for Tempo
+      user: ""
+      # -- Password for Tempo
+      password: ""
+  # -- Use external auth for the collectors
+  external:
+    # -- Enable external auth
+    enable: true
+    # -- Secret Store to use for secrets
+    secretStore:
+      # -- Name of the secret store
+      name: doppler
+      # -- Kind of the secret store, either `ClusterSecretStore` or `SecretStore`
+      kind: SecretStore
+    # -- External Secret Policy
+    policy:
+      # -- External Secret Creation Policy
+      creation: Owner
+      # -- External Secret Deletion Policy
+      deletion: Retain
+
+# -- YAML Anchor for PodSecurityContext
+podSecurityContext: &podSecurityContext
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+  runAsNonRoot: true
+# -- YAML Anchor for SecurityContext
+securityContext: &securityContext
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  capabilities:
+    drop:
+      - ALL
+
+# -- Dictionary of collectors to deploy. Key is the name of the collector, while the value is the configuration for the collector.
+# This has 2 sub keys: `collector` which is the actual [collector configuration](https://opentelemetry.io/docs/collector/configuration/),
+# and `spec`, which is the [operator's configuration](https://github.com/open-telemetry/opentelemetry-operator/blob/main/docs/api.md#opentelemetrycollectorspec)
+# for the collector.
 apps:
   target-allocator:
     collector: ta.yaml
     spec:
       mode: statefulset
-      envFrom:
-        - secretRef:
-            name: grafana-cloud-secrets
-        - configMapRef:
-            name: otel-common-config-map
-      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
       nodeSelector: { }
-      podAnnotations:
-        argocd.argoproj.io/compare-options: IgnoreExtraneous
-        atomi.cloud/landscape: pichu
-        atomi.cloud/cluster: opal
-        atomi.cloud/platform: systems
-        atomi.cloud/service: telemetry-collector
-        atomi.cloud/module: target-allocator-collector
-        atomi.cloud/layer: "1"
       targetAllocator:
         enabled: true
-        serviceAccount: otel-collector-ta-sa
+        serviceAccount: *taSA
         prometheusCR:
           enabled: true
       replicas: 1
@@ -81,20 +215,18 @@ apps:
         requests:
           cpu: 100m
           memory: 256Mi
+      podAnnotations:
+        <<: *tags
+        atomi.cloud/module: target-allocator-collector
+      envFrom:
+        - secretRef:
+            name: *secretName
+        - configMapRef:
+            name: *configMapName
       podSecurityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
+        <<: *podSecurityContext
       securityContext:
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        capabilities:
-          drop:
-            - ALL
+        <<: *securityContext
 
   otlp:
     collector: otlp.yaml
@@ -105,25 +237,11 @@ apps:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
       nodeSelector: { }
-      podAnnotations:
-        argocd.argoproj.io/compare-options: IgnoreExtraneous
-        atomi.cloud/landscape: pichu
-        atomi.cloud/cluster: opal
-        atomi.cloud/platform: systems
-        atomi.cloud/service: telemetry-collector
-        atomi.cloud/module: otlp-collector
-        atomi.cloud/layer: "1"
       ports:
         - port: 55679
           targetPort: 55679
           name: zpages
-      envFrom:
-        - secretRef:
-            name: grafana-cloud-secrets
-        - configMapRef:
-            name: otel-common-config-map
       resources:
         limits:
           cpu: 250m
@@ -131,20 +249,18 @@ apps:
         requests:
           cpu: 50m
           memory: 128Mi
+      podAnnotations:
+        <<: *tags
+        atomi.cloud/module: otlp-collector
+      envFrom:
+        - secretRef:
+            name: *secretName
+        - configMapRef:
+            name: *configMapName
       podSecurityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
+        <<: *podSecurityContext
       securityContext:
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        capabilities:
-          drop:
-            - ALL
+        <<: *securityContext
 
   otlp-logs:
     collector: otlp-logs.yaml
@@ -155,25 +271,11 @@ apps:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
       nodeSelector: { }
-      podAnnotations:
-        argocd.argoproj.io/compare-options: IgnoreExtraneous
-        atomi.cloud/landscape: pichu
-        atomi.cloud/cluster: opal
-        atomi.cloud/platform: systems
-        atomi.cloud/service: telemetry-collector
-        atomi.cloud/module: otlp-collector
-        atomi.cloud/layer: "1"
       ports:
         - port: 55679
           targetPort: 55679
           name: zpages
-      envFrom:
-        - secretRef:
-            name: grafana-cloud-secrets
-        - configMapRef:
-            name: otel-common-config-map
       resources:
         limits:
           cpu: 250m
@@ -181,44 +283,28 @@ apps:
         requests:
           cpu: 50m
           memory: 128Mi
+      podAnnotations:
+        <<: *tags
+        atomi.cloud/module: otlp-collector
+      envFrom:
+        - secretRef:
+            name: *secretName
+        - configMapRef:
+            name: *configMapName
       podSecurityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
+        <<: *podSecurityContext
       securityContext:
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        capabilities:
-          drop:
-            - ALL
+        <<: *securityContext
 
   kubelet-stats:
     collector: kubelet-stats.yaml
     spec:
       mode: daemonset
-      envFrom:
-        - secretRef:
-            name: grafana-cloud-secrets
-        - configMapRef:
-            name: otel-common-config-map
-      serviceAccount: otel-collector-kubelet-sa
-      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
+      serviceAccount: *kubeletSA
       ports:
         - port: 55679
           targetPort: 55679
           name: zpages
-      podAnnotations:
-        argocd.argoproj.io/compare-options: IgnoreExtraneous
-        atomi.cloud/landscape: pichu
-        atomi.cloud/cluster: opal
-        atomi.cloud/platform: systems
-        atomi.cloud/service: telemetry-collector
-        atomi.cloud/module: kubelet-stats-collector
-        atomi.cloud/layer: "1"
       env:
         - name: K8S_NODE_NAME
           valueFrom:
@@ -236,48 +322,40 @@ apps:
         requests:
           cpu: 50m
           memory: 128Mi
+      podAnnotations:
+        <<: *tags
+        atomi.cloud/module: kubelet-stats-collector
+      envFrom:
+        - secretRef:
+            name: *secretName
+        - configMapRef:
+            name: *configMapName
       podSecurityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
+        <<: *podSecurityContext
       securityContext:
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        capabilities:
-          drop:
-            - ALL
+        <<: *securityContext
 
   container-logs:
     collector: container-logs.yaml
     spec:
       mode: daemonset
-      envFrom:
-        - secretRef:
-            name: grafana-cloud-secrets
-        - configMapRef:
-            name: otel-common-config-map
       env:
         - name: KUBE_NODE_NAME
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
       ports:
         - port: 55679
           targetPort: 55679
           name: zpages
       podAnnotations:
-        argocd.argoproj.io/compare-options: IgnoreExtraneous
-        atomi.cloud/landscape: pichu
-        atomi.cloud/cluster: opal
-        atomi.cloud/platform: systems
-        atomi.cloud/service: telemetry-collector
+        <<: *tags
         atomi.cloud/module: container-logs-collector
-        atomi.cloud/layer: "1"
+      envFrom:
+        - secretRef:
+            name: *secretName
+        - configMapRef:
+            name: *configMapName
       resources:
         limits:
           cpu: 1
@@ -307,25 +385,10 @@ apps:
     collector: k8s-cluster.yaml
     spec:
       mode: deployment
-      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
-      env:
-      envFrom:
-        - secretRef:
-            name: grafana-cloud-secrets
-        - configMapRef:
-            name: otel-common-config-map
       ports:
         - port: 55679
           targetPort: 55679
           name: zpages
-      podAnnotations:
-        argocd.argoproj.io/compare-options: IgnoreExtraneous
-        atomi.cloud/landscape: pichu
-        atomi.cloud/cluster: opal
-        atomi.cloud/platform: systems
-        atomi.cloud/service: telemetry-collector
-        atomi.cloud/module: cluster-metrics-collector
-        atomi.cloud/layer: "1"
       nodeSelector: { }
       replicas: 1
       resources:
@@ -335,44 +398,28 @@ apps:
         requests:
           cpu: 50m
           memory: 256Mi
+      serviceAccount: *k8sclusterSA
+      podAnnotations:
+        <<: *tags
+        atomi.cloud/module: cluster-metrics-collector
+      envFrom:
+        - secretRef:
+            name: *secretName
+        - configMapRef:
+            name: *configMapName
       podSecurityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
+        <<: *podSecurityContext
       securityContext:
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        capabilities:
-          drop:
-            - ALL
-      serviceAccount: otel-collector-k8scluster-sa
+        <<: *securityContext
 
   k8s-events:
     collector: k8s-events.yaml
     spec:
       mode: deployment
-      image: ghcr.io/open-telemetry/opentelemetry-collector-releases/opentelemetry-collector-contrib:0.77.0
       ports:
         - port: 55679
           targetPort: 55679
           name: zpages
-      envFrom:
-        - secretRef:
-            name: grafana-cloud-secrets
-        - configMapRef:
-            name: otel-common-config-map
-      podAnnotations:
-        argocd.argoproj.io/compare-options: IgnoreExtraneous
-        atomi.cloud/landscape: pichu
-        atomi.cloud/cluster: opal
-        atomi.cloud/platform: systems
-        atomi.cloud/service: telemetry-collector
-        atomi.cloud/module: cluster-events-collector
-        atomi.cloud/layer: "1"
       nodeSelector: { }
       replicas: 1
       resources:
@@ -382,62 +429,18 @@ apps:
         requests:
           cpu: 50m
           memory: 256Mi
+      serviceAccount: *k8seventsSA
+      podAnnotations:
+        <<: *tags
+        atomi.cloud/module: cluster-events-collector
+      envFrom:
+        - secretRef:
+            name: *secretName
+        - configMapRef:
+            name: *configMapName
       podSecurityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        runAsNonRoot: true
+        <<: *podSecurityContext
       securityContext:
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: true
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        capabilities:
-          drop:
-            - ALL
-      serviceAccount: otel-collector-k8sevents-sa
+        <<: *securityContext
 
-auth:
-  secretName: grafana-cloud-secrets
-  mimir:
-    user:
-      local: MIMIR_USER
-      remote: MIMIR_USER
-    password:
-      local: MIMIR_PASSWORD
-      remote: MIMIR_PASSWORD
-  loki:
-    user:
-      local: LOKI_USER
-      remote: LOKI_USER
-    password:
-      local: LOKI_PASSWORD
-      remote: LOKI_PASSWORD
-  tempo:
-    user:
-      local: TEMPO_USER
-      remote: TEMPO_USER
-    password:
-      local: TEMPO_PASSWORD
-      remote: TEMPO_PASSWORD
-  internal:
-    enable: false
-    mimir:
-      user: ""
-      password: ""
-    loki:
-      user: ""
-      password: ""
-    tempo:
-      user: ""
-      password: ""
-  external:
-    enable: true
-    remoteSecretName: dev/cloudflare-tunnel/token
-    secretStore:
-      name: aws-ssm-secret-store
-      kind: ClusterSecretStore
-    policy:
-      creation: Owner
-      deletion: Retain
+

@@ -1,0 +1,104 @@
+serviceTree:
+  landscape: &landscape lapras
+  cluster: &cluster opal
+
+tags: &tags
+  atomi.cloud/landscape: *landscape
+  atomi.cloud/cluster: *cluster
+
+cluster: *cluster
+
+loki: https://logs-prod-011.grafana.net/loki/api/v1/push
+tempo: https://tempo-prod-07-prod-ap-southeast-0.grafana.net/tempo
+mimir: https://prometheus-prod-18-prod-ap-southeast-0.grafana.net/api/prom/push
+
+apps:
+  target-allocator:
+    spec:
+      mode: statefulset
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 100m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+  otlp:
+    spec:
+      mode: daemonset
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 128Mi
+      podAnnotations:
+        <<: *tags
+
+  otlp-logs:
+    spec:
+      mode: daemonset
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 128Mi
+      podAnnotations:
+        <<: *tags
+
+  kubelet-stats:
+    spec:
+      mode: daemonset
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 128Mi
+      podAnnotations:
+        <<: *tags
+
+  container-logs:
+    spec:
+      mode: daemonset
+      podAnnotations:
+        <<: *tags
+
+  k8s-cluster:
+    collector: k8s-cluster.yaml
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+  k8s-events:
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+

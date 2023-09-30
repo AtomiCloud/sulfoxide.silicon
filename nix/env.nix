@@ -11,6 +11,7 @@ with packages;
 
   dev = [
     pls
+    skopeo
     git
   ];
 

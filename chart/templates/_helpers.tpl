@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "atomi-otel-collectors.name" -}}
+{{- define "sulfoxide-silicon.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "atomi-otel-collectors.fullname" -}}
+{{- define "sulfoxide-silicon.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,19 +26,19 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "atomi-otel-collectors.chart" -}}
+{{- define "sulfoxide-silicon.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "atomi-otel-collectors.labels" -}}
-helm.sh/chart: {{ include "atomi-otel-collectors.chart" . }}
+{{- define "sulfoxide-silicon.labels" -}}
+helm.sh/chart: {{ include "sulfoxide-silicon.chart" . }}
 {{- range $k, $v := .Values.serviceTree }}
 "atomi.cloud/{{ $k }}": "{{ $v }}"
 {{- end }}
-{{ include "atomi-otel-collectors.selectorLabels" . }}
+{{ include "sulfoxide-silicon.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -48,8 +48,8 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Common annotations
 */}}
-{{- define "atomi-otel-collectors.annotations" -}}
-helm.sh/chart: {{ include "atomi-otel-collectors.chart" . }}
+{{- define "sulfoxide-silicon.annotations" -}}
+helm.sh/chart: {{ include "sulfoxide-silicon.chart" . }}
 {{- range $k, $v := .Values.serviceTree }}
 "atomi.cloud/{{ $k }}": "{{ $v }}"
 {{- end }}
@@ -58,24 +58,24 @@ helm.sh/chart: {{ include "atomi-otel-collectors.chart" . }}
 {{/*
 Selector labels
 */}}
-{{- define "atomi-otel-collectors.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "atomi-otel-collectors.name" . }}
+{{- define "sulfoxide-silicon.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "sulfoxide-silicon.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "atomi-otel-collectors.serviceAccountName" -}}
+{{- define "sulfoxide-silicon.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "atomi-otel-collectors.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "sulfoxide-silicon.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
 
-{{- define "atomi-otel-collectors.tr8labels" -}}
-tr8.io/chart: {{ include "atomi-otel-collectors.chart" . }}
+{{- define "sulfoxide-silicon.tr8labels" -}}
+tr8.io/chart: {{ include "sulfoxide-silicon.chart" . }}
 {{- range $k, $v := .Values.labels }}
 "tr8.io/{{ $k }}": "{{ $v }}"
 {{- end }}

@@ -104,11 +104,11 @@ processors:
         - tag_name: landscape
           key: atomi.cloud/landscape
           from: pod
-        - tag_name: service
-          key: atomi.cloud/service
-          from: pod
         - tag_name: platform
           key: atomi.cloud/platform
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
           from: pod
         - tag_name: module
           key: atomi.cloud/module
@@ -116,7 +116,6 @@ processors:
         - tag_name: drop_log
           key: drop_log
           from: pod
-
     pod_association:
       - sources:
           - from: resource_attribute
@@ -147,7 +146,7 @@ processors:
         key: loki.resource.labels
         value: >-
           module, landscape, platform, service
-          k8s.cluster, k8s.container.name, k8s.namespace.name, k8s.node.name, 
+          k8s.cluster, k8s.namespace.name, k8s.node.name, 
           k8s.deployment.name, k8s.statefulset.name, k8s.daemonset.name, 
           k8s.cronjob.name
   filter:

@@ -35,7 +35,7 @@ processors:
       - action: insert
         key: loki.resource.labels
         value: >-
-          k8s.cluster, k8s.object.name
+          k8s.cluster
 
 service:
   extensions: [ health_check, pprof, zpages, basicauth/loki ]

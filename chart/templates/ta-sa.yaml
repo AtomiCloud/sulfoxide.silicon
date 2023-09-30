@@ -3,10 +3,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: "{{ .Release.Name }}-opentelemetry-targetallocator-cr-role"
-  labels:
-    {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
-  annotations:
-    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+  labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
+  annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
 rules:
   - apiGroups:
       - monitoring.coreos.com
@@ -20,10 +18,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: "{{.Release.Name }}-opentelemetry-targetallocator-role"
-  labels:
-    {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
-  annotations:
-    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+  labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
+  annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
 rules:
   - apiGroups: [ "" ]
     resources:
@@ -56,10 +52,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{.Release.Name }}-opentelemetry-targetallocator-cr-rolebinding
-  labels:
-      {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
-  annotations:
-    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+  labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
+  annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -73,10 +67,8 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: {{.Release.Name }}-opentelemetry-targetallocator-rolebinding
-  labels:
-    {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
-  annotations:
-    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+  labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
+  annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -90,8 +82,6 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: {{ .Values.ta.serviceAccount.name }}
-  labels:
-      {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
-  annotations:
-    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+  labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
+  annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
 {{- end -}}

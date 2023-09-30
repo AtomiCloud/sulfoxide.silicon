@@ -2,10 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Values.configMapName }}
-  labels:
-    {{- include "atomi-otel-collectors.labels" .  | nindent 4 }}
-  annotations:
-    {{- include "atomi-otel-collectors.annotations" .  | nindent 4 }}
+  labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
+  annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
 data:
   CLUSTER: "{{ .Values.cluster }}"
   MIMIR_ENDPOINT: "{{ .Values.mimir }}"
