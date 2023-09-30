@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.0.1...v1.1.0) (2023-09-30)
+
+
+### 🚀 New Features
+
+* values yaml example ([9f04b4e](https://github.com/AtomiCloud/sulfoxide.silicon/commit/9f04b4ecf7c84697d556d61a0fe017b9764abf98))
+
 ## [1.0.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.0.0...v1.0.1) (2023-09-27)
 
 
