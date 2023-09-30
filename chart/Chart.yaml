@@ -2,7 +2,7 @@ apiVersion: v2
 name: sulfoxide-silicon
 description: Helm chart to deploy all different types OTEL Collectors for infrastructure telemetry for AtomiCloud
 type: application
-version: 1.1.0
+version: 1.1.1
 appVersion: "0.1.0"
 dependencies:
   - name: sulfoxide-bromine
