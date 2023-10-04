@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.1.1...v1.1.2) (2023-10-04)
+
+
+### 🐛 Bug Fixes
+
+* remove trace of tr8 ([6091a7b](https://github.com/AtomiCloud/sulfoxide.silicon/commit/6091a7b3bd892ca69d1ae7fff9abe4a9dbe37e7b))
+
 ## [1.1.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.1.0...v1.1.1) (2023-09-30)
 
 
