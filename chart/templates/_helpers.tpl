@@ -73,10 +73,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{- define "sulfoxide-silicon.tr8labels" -}}
-tr8.io/chart: {{ include "sulfoxide-silicon.chart" . }}
-{{- range $k, $v := .Values.labels }}
-"tr8.io/{{ $k }}": "{{ $v }}"
-{{- end }}
-{{- end }}
