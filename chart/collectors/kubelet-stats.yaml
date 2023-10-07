@@ -1,6 +1,6 @@
 receivers:
   kubeletstats:
-    collection_interval: 5s
+    collection_interval: 60s
     auth_type: "serviceAccount"
     endpoint: "https://${env:K8S_NODE_NAME}:10250"
     insecure_skip_verify: true
@@ -48,6 +48,9 @@ processors:
         - tag_name: landscape
           key: atomi.cloud/landscape
           from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
+          from: pod
         - tag_name: platform
           key: atomi.cloud/platform
           from: pod
@@ -60,6 +63,9 @@ processors:
       labels:
         - tag_name: landscape
           key: atomi.cloud/landscape
+          from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
           from: pod
         - tag_name: platform
           key: atomi.cloud/platform

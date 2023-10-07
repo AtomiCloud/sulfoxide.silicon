@@ -29,6 +29,9 @@ processors:
         - tag_name: landscape
           key: atomi.cloud/landscape
           from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
+          from: pod
         - tag_name: platform
           key: atomi.cloud/platform
           from: pod
@@ -41,6 +44,9 @@ processors:
       labels:
         - tag_name: landscape
           key: atomi.cloud/landscape
+          from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
           from: pod
         - tag_name: service
           key: atomi.cloud/service

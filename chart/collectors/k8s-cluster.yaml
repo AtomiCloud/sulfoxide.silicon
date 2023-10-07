@@ -1,6 +1,6 @@
 receivers:
   k8s_cluster:
-    collection_interval: 5s
+    collection_interval: 60s
     node_conditions_to_report:
       - Ready
       - MemoryPressure
@@ -51,6 +51,9 @@ processors:
         - tag_name: landscape
           key: atomi.cloud/landscape
           from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
+          from: pod
         - tag_name: platform
           key: atomi.cloud/platform
           from: pod
@@ -63,6 +66,9 @@ processors:
       labels:
         - tag_name: landscape
           key: atomi.cloud/landscape
+          from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
           from: pod
         - tag_name: service
           key: atomi.cloud/service

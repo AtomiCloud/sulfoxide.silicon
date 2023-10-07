@@ -104,13 +104,13 @@ auth:
       # -- Local Key reference
       local: MIMIR_USER
       # -- Remote Key reference
-      remote: MIMIR_USER
+      remote: MANUAL_MIMIR_USER
     # -- Password for Mimir
     password:
       # -- Local Key reference
       local: MIMIR_PASSWORD
       # -- Remote Key reference
-      remote: MIMIR_PASSWORD
+      remote: MANUAL_MIMIR_PASSWORD
   # -- Loki auth configuration
   loki:
     # -- Username for Loki
@@ -118,13 +118,13 @@ auth:
       # -- Local Key reference
       local: LOKI_USER
       # -- Remote Key reference
-      remote: LOKI_USER
+      remote: MANUAL_LOKI_USER
     # -- Password for Loki
     password:
       # -- Local Key reference
       local: LOKI_PASSWORD
       # -- Remote Key reference
-      remote: LOKI_PASSWORD
+      remote: MANUAL_LOKI_PASSWORD
   # -- Tempo auth configuration
   tempo:
     # -- Username for Tempo
@@ -132,13 +132,13 @@ auth:
       # -- Local Key reference
       local: TEMPO_USER
       # -- Remote Key reference
-      remote: TEMPO_USER
+      remote: MANUAL_TEMPO_USER
     # -- Password for Tempo
     password:
       # -- Local Key reference
       local: TEMPO_PASSWORD
       # -- Remote Key reference
-      remote: TEMPO_PASSWORD
+      remote: MANUAL_TEMPO_PASSWORD
   # -- Use internal auth for the collectors (hard coded password)
   internal:
     # -- Enable internal auth
