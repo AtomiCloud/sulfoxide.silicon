@@ -1,3 +1,16 @@
+## [1.2.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.1.2...v1.2.0) (2023-10-07)
+
+
+### 🚀 New Features
+
+* entei ([7aa6280](https://github.com/AtomiCloud/sulfoxide.silicon/commit/7aa6280c92eafca2eb7f14478a02202e620ece1b))
+* migrate entei to entei opal values ([28c5d79](https://github.com/AtomiCloud/sulfoxide.silicon/commit/28c5d79bd4792ba070d4f0e3f1f1cb77c885edcb))
+
+
+### 🐛 Bug Fixes
+
+* update dependencies ([4789376](https://github.com/AtomiCloud/sulfoxide.silicon/commit/47893767821746edbc8582f2cd54f61f13d3e43a))
+
 ## [1.1.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.1.1...v1.1.2) (2023-10-04)
 
 
