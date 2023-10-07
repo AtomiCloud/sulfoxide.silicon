@@ -110,7 +110,7 @@ extensions:
       username: ${env:TEMPO_USER}
       password: ${env:TEMPO_PASSWORD}
 service:
-  extensions: [ health_check, pprof, zpages, basic_auth/mimir, basic_auth/tempo ]
+  extensions: [ health_check, pprof, zpages, basicauth/mimir, basic_auth/tempo ]
   pipelines:
     traces:
       receivers: [ otlp ]

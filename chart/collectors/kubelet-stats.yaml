@@ -103,7 +103,7 @@ extensions:
       username: ${env:MIMIR_USER}
       password: ${env:MIMIR_PASSWORD}
 service:
-  extensions: [ health_check, pprof, zpages, basic_auth/mimir ]
+  extensions: [ health_check, pprof, zpages, basicauth/mimir ]
   pipelines:
     metrics:
       receivers: [kubeletstats]

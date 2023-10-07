@@ -76,7 +76,6 @@ processors:
         - k8s.pod.uid
         - k8s.deployment.name
         - k8s.daemonset.name
-        - k8s.service.name
         - k8s.statefulset.name
         - k8s.replicaset.name
         - k8s.job.name
