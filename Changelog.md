@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.2.0...v1.2.1) (2023-10-07)
+
+
+### 🐛 Bug Fixes
+
+* incorrect OTEL configuration ([14a5317](https://github.com/AtomiCloud/sulfoxide.silicon/commit/14a53179049f0b3b569c6879115a5bba9fddd22d))
+
 ## [1.2.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.1.2...v1.2.0) (2023-10-07)
 
 
