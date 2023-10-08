@@ -1,3 +1,10 @@
+## [1.3.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.2.2...v1.3.0) (2023-10-08)
+
+
+### 🚀 New Features
+
+* remove otlp collector and drop attributes ([930f0a4](https://github.com/AtomiCloud/sulfoxide.silicon/commit/930f0a45deec805e1ad8ba9cdf879f643ab34969))
+
 ## [1.2.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.2.1...v1.2.2) (2023-10-07)
 
 
