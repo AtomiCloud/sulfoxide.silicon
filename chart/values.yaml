@@ -28,18 +28,6 @@ mimir: https://prometheus-prod-18-prod-ap-southeast-0.grafana.net/api/prom/push
 # -- Name of the common config map to propagate to all collectors
 configMapName: &configMapName otel-common-config-map
 
-# -- Configuration for k8sattr extension
-k8sattr:
-  # -- Enable creation k8sattr role
-  createRole: true
-  # -- Service accounts to bind the k8sattr roles to
-  bind:
-    - otel-collector-kubelet-sa
-    - otel-otlp-collector
-    - otel-otlp-logs-collector
-    - otel-container-logs-collector
-    - otel-collector-k8scluster-sa
-
 # -- Configuration for Target Allocator
 ta:
   # -- Enable creation of target allocator roles
@@ -83,6 +71,21 @@ kubelet:
     create: true
     # -- Name of the service account
     name: &kubeletSA otel-collector-kubelet-sa
+
+
+# -- Configuration for k8sattr extension
+k8sattr:
+  # -- Enable creation k8sattr role
+  createRole: true
+  # -- Service accounts to bind the k8sattr roles to
+  bind:
+    - *kubeletSA
+    - otel-otlp-collector
+    - otel-otlp-logs-collector
+    - otel-container-logs-collector
+    - *k8sclusterSA
+    - *taSA
+
 
 # -- Create SecretStore via secret of secrets pattern
 sulfoxide-bromine:
@@ -201,7 +204,6 @@ apps:
     collector: ta.yaml
     spec:
       mode: statefulset
-      nodeSelector: { }
       targetAllocator:
         enabled: true
         serviceAccount: *taSA
@@ -237,41 +239,6 @@ apps:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-      nodeSelector: { }
-      ports:
-        - port: 55679
-          targetPort: 55679
-          name: zpages
-      resources:
-        limits:
-          cpu: 250m
-          memory: 1Gi
-        requests:
-          cpu: 50m
-          memory: 128Mi
-      podAnnotations:
-        <<: *tags
-        atomi.cloud/module: otlp-collector
-      envFrom:
-        - secretRef:
-            name: *secretName
-        - configMapRef:
-            name: *configMapName
-      podSecurityContext:
-        <<: *podSecurityContext
-      securityContext:
-        <<: *securityContext
-
-  otlp-logs:
-    collector: otlp-logs.yaml
-    spec:
-      mode: daemonset
-      env:
-        - name: KUBE_NODE_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: spec.nodeName
-      nodeSelector: { }
       ports:
         - port: 55679
           targetPort: 55679
@@ -314,7 +281,6 @@ apps:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
-      nodeSelector: { }
       resources:
         limits:
           cpu: 250m
@@ -389,7 +355,6 @@ apps:
         - port: 55679
           targetPort: 55679
           name: zpages
-      nodeSelector: { }
       replicas: 1
       resources:
         limits:
@@ -420,7 +385,6 @@ apps:
         - port: 55679
           targetPort: 55679
           name: zpages
-      nodeSelector: { }
       replicas: 1
       resources:
         limits:

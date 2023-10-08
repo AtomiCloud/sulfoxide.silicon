@@ -12,9 +12,10 @@ loki: https://logs-prod-020.grafana.net/loki/api/v1/push
 
 tempo: https://tempo-prod-14-prod-ap-southeast-1.grafana.net/tempo
 
-mimir: https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom/push
+mimir: https://prometheus-prod-37-prod-ap-southeaWst-1.grafana.net/api/prom/push
 
 apps:
+  # done
   target-allocator:
     spec:
       mode: statefulset
@@ -37,21 +38,8 @@ apps:
           cpu: 250m
           memory: 1Gi
         requests:
-          cpu: 0m
-          memory: 0Mi
-      podAnnotations:
-        <<: *tags
-
-  otlp-logs:
-    spec:
-      mode: daemonset
-      resources:
-        limits:
-          cpu: 250m
-          memory: 1Gi
-        requests:
-          cpu: 0m
-          memory: 0Mi
+          cpu: "0"
+          memory: "0"
       podAnnotations:
         <<: *tags
 
@@ -63,24 +51,26 @@ apps:
           cpu: 250m
           memory: 1Gi
         requests:
-          cpu: 0m
-          memory: 0Mi
+          cpu: "0"
+          memory: "0"
       podAnnotations:
         <<: *tags
 
+  # done
   container-logs:
     spec:
       mode: daemonset
       resources:
         requests:
-          cpu: 0m
-          memory: 0Mi
+          cpu: "0"
+          memory: "0"
         limits:
           cpu: 250m
           memory: 1Gi
       podAnnotations:
         <<: *tags
 
+  # done
   k8s-cluster:
     collector: k8s-cluster.yaml
     spec:
@@ -96,6 +86,7 @@ apps:
       podAnnotations:
         <<: *tags
 
+  # done
   k8s-events:
     spec:
       mode: deployment

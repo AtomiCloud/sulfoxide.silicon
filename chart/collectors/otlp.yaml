@@ -76,6 +76,9 @@ processors:
       - key: otel.source
         action: insert
         value: otlp
+      - action: insert
+        key: loki.attribute.labels
+        value: otel.source, Method, StatusCode, Scheme
   resource:
     attributes:
       - key: container.id
@@ -83,6 +86,13 @@ processors:
       - key: k8s.cluster
         action: insert
         value: ${env:CLUSTER}
+      - action: insert
+        key: loki.resource.labels
+        value: >-
+          module, landscape, platform, service, cluster
+          k8s.cluster, k8s.namespace.name, k8s.node.name, 
+          k8s.deployment.name, k8s.statefulset.name, k8s.daemonset.name, 
+          k8s.cronjob.name
 exporters:
   prometheusremotewrite:
     endpoint: ${env:MIMIR_ENDPOINT}
@@ -94,6 +104,10 @@ exporters:
     endpoint: ${env:TEMPO_ENDPOINT}
     auth:
       authenticator: basicauth/tempo
+  loki:
+    endpoint: ${env:LOKI_ENDPOINT}
+    auth:
+      authenticator: basicauth/loki
   logging:
 
 extensions:
@@ -109,9 +123,17 @@ extensions:
     client_auth:
       username: ${env:TEMPO_USER}
       password: ${env:TEMPO_PASSWORD}
+  basicauth/loki:
+    client_auth:
+      username: ${env:LOKI_USER}
+      password: ${env:LOKI_PASSWORD}
 service:
-  extensions: [ health_check, pprof, zpages, basicauth/mimir, basicauth/tempo ]
+  extensions: [ health_check, pprof, zpages, basicauth/mimir, basicauth/tempo, basicauth/loki ]
   pipelines:
+    logs:
+      receivers: [ otlp ]
+      processors: [ k8sattributes, resource, attributes, batch ]
+      exporters: [ loki ]
     traces:
       receivers: [ otlp ]
       processors: [ k8sattributes, resource, attributes, batch ]

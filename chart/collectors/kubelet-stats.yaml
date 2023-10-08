@@ -19,11 +19,39 @@ processors:
       - key: otel.source
         action: insert
         value: kubelet-stats
+      - key: k8s.deployment.uid
+        action: delete
+      - key: k8s.hpa.uid
+        action: delete
+      - key: k8s.namespace.uid
+        action: delete
+      - key: k8s.node.uid
+        action: delete
+      - key: k8s.pod.uid
+        action: delete
+      - key: k8s.replicaset.uid
+        action: delete
+      - key: k8s.statefulset.uid
+        action: delete
   resource:
     attributes:
       - key: k8s.cluster
         action: insert
         value: ${env:CLUSTER}
+      - key: k8s.deployment.uid
+        action: delete
+      - key: k8s.hpa.uid
+        action: delete
+      - key: k8s.namespace.uid
+        action: delete
+      - key: k8s.node.uid
+        action: delete
+      - key: k8s.pod.uid
+        action: delete
+      - key: k8s.replicaset.uid
+        action: delete
+      - key: k8s.statefulset.uid
+        action: delete
   k8sattributes:
     auth_type: "serviceAccount"
     passthrough: false

@@ -26,6 +26,63 @@ processors:
         value: ${env:CLUSTER}
       - key: container.id
         action: delete
+  k8sattributes:
+    auth_type: "serviceAccount"
+    passthrough: false
+    extract:
+      metadata:
+        - k8s.pod.name
+        - k8s.pod.uid
+        - k8s.deployment.name
+        - k8s.daemonset.name
+        - k8s.statefulset.name
+        - k8s.replicaset.name
+        - k8s.job.name
+        - k8s.cronjob.name
+        - k8s.namespace.name
+        - k8s.node.name
+      annotations:
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+      labels:
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+    pod_association:
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.uid
 exporters:
   logging:
   prometheusremotewrite:
@@ -47,5 +104,5 @@ service:
   pipelines:
     metrics:
       receivers: [ prometheus ]
-      processors: [ batch, resource, attributes ]
+      processors: [ k8sattributes, resource, attributes, batch ]
       exporters: [ logging, prometheusremotewrite ]
