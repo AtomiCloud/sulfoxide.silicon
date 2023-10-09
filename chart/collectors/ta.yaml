@@ -85,6 +85,8 @@ processors:
             name: k8s.pod.uid
 exporters:
   logging:
+  debug:
+    verbosity: detailed
   prometheusremotewrite:
     endpoint: ${env:MIMIR_ENDPOINT}
     resource_to_telemetry_conversion:
@@ -101,6 +103,9 @@ extensions:
       password: ${env:MIMIR_PASSWORD}
 service:
   extensions: [ health_check, pprof, zpages, basicauth/mimir ]
+  telemetry:
+    logs:
+      level: "debug"
   pipelines:
     metrics:
       receivers: [ prometheus ]
