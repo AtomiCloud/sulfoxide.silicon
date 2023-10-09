@@ -6,8 +6,10 @@ metadata:
   namespace: kube-system
 data:
   custom.server: |
-    kubeapi
-    kubenodes {{ .Values.coredns.baseDomain | default "node.cluster.local" }} in-addr.arpa ip6.arpa {
-      fallthrough in-addr.arpa ip6.arpa
+    .:53 {
+      kubeapi
+      kubenodes {{ .Values.coredns.baseDomain | default "node.cluster.local" }} in-addr.arpa ip6.arpa {
+        fallthrough in-addr.arpa ip6.arpa
+      }
     }
 {{- end }}
