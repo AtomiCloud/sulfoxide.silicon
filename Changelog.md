@@ -1,3 +1,11 @@
+## [1.4.5](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.4...v1.4.5) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* incorrect mimir endpoint ([5a8f310](https://github.com/AtomiCloud/sulfoxide.silicon/commit/5a8f31080342ce97b4ea66843c55bdf9cca7247d))
+* missing SA account ([4ef7b2e](https://github.com/AtomiCloud/sulfoxide.silicon/commit/4ef7b2ed4c17b5a8fc4ab3ae1e7620e1902537fb))
+
 ## [1.4.4](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.3...v1.4.4) (2023-10-09)
 
 
