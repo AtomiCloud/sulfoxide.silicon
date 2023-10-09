@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.1...v1.4.2) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* incorrect k8sattr setup ([cf4ffce](https://github.com/AtomiCloud/sulfoxide.silicon/commit/cf4ffce8aad1725b73773358f81bd8c5cdc562b7))
+
 ## [1.4.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.0...v1.4.1) (2023-10-09)
 
 
