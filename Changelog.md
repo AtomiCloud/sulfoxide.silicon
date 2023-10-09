@@ -1,3 +1,10 @@
+## [1.4.6](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.5...v1.4.6) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* missing endpoint push ([9baf406](https://github.com/AtomiCloud/sulfoxide.silicon/commit/9baf40650dd2fd250fa107dec4c2c10e121809aa))
+
 ## [1.4.5](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.4...v1.4.5) (2023-10-09)
 
 
