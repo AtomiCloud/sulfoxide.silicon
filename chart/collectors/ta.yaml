@@ -103,9 +103,9 @@ extensions:
       password: ${env:MIMIR_PASSWORD}
 service:
   extensions: [ health_check, pprof, zpages, basicauth/mimir ]
-#  telemetry:
-#    logs:
-#      level: "debug"
+  telemetry:
+    logs:
+      level: "debug"
   pipelines:
     metrics:
       receivers: [ prometheus ]
