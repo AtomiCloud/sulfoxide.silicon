@@ -1,3 +1,11 @@
+## [1.4.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.3.0...v1.4.0) (2023-10-09)
+
+
+### 🚀 New Features
+
+* debug container logs ([ac8e404](https://github.com/AtomiCloud/sulfoxide.silicon/commit/ac8e404b0f1329a13a05ce64d0c9e78993c69a92))
+* debug ta ([b34d78d](https://github.com/AtomiCloud/sulfoxide.silicon/commit/b34d78d41e7571351558420e6de72469a8c4390e))
+
 ## [1.3.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.2.2...v1.3.0) (2023-10-08)
 
 
