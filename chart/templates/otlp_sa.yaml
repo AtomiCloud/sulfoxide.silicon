@@ -6,6 +6,7 @@ metadata:
   annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
   name: {{ .Values.otlp.serviceAccount.name }}
 {{- end -}}
+---
 {{- if .Values.containerLogs.serviceAccount.create }}
 apiVersion: v1
 kind: ServiceAccount
