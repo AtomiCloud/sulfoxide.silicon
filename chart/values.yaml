@@ -75,6 +75,23 @@ kubelet:
     name: &kubeletSA otel-collector-kubelet-sa
 
 
+#-- Configuration of OTLP Collector
+otlp:
+  # -- Service account for OTLP
+  serviceAccount:
+    # -- Enable creation of the service account
+    create: true
+    # -- Name of the service account
+    name: &otlpSA otel-collector-otlp-sa
+
+containerLogs:
+  # -- Service account for Container Logs
+  serviceAccount:
+    # -- Enable creation of the service account
+    create: true
+    # -- Name of the service account
+    name: &containerLogsSA otel-container-logs-sa
+
 # -- Configuration for k8sattr extension
 k8sattr:
   # -- Enable creation k8sattr role
@@ -82,8 +99,8 @@ k8sattr:
   # -- Service accounts to bind the k8sattr roles to
   bind:
     - *kubeletSA
-    - &otlpSA otel-otlp-collector
-    - &containerLogsSA otel-otlp-logs-collector
+    - *otlpSA
+    - *containerLogsSA
     - *k8sclusterSA
     - *taSA
 
