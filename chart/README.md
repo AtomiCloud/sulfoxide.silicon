@@ -59,6 +59,9 @@ Helm chart to deploy all different types OTEL Collectors for infrastructure tele
 | containerLogs.serviceAccount | object | `{"create":true,"name":"otel-container-logs-sa"}` | Service account for Container Logs |
 | containerLogs.serviceAccount.create | bool | `true` | Enable creation of the service account |
 | containerLogs.serviceAccount.name | string | `"otel-container-logs-sa"` | Name of the service account |
+| coredns | object | `{"baseDomain":"node.cluster.local","patch":true}` | CoreDNS Patch |
+| coredns.baseDomain | string | `"node.cluster.local"` | base domain for node patching |
+| coredns.patch | bool | `true` | enable patching core DNS to resolve nodes |
 | k8sattr | object | `{"bind":["otel-collector-kubelet-sa","otel-collector-otlp-sa","otel-container-logs-sa","otel-collector-k8scluster-sa","otel-collector-ta-sa"],"createRole":true}` | Configuration for k8sattr extension |
 | k8sattr.bind | list | `["otel-collector-kubelet-sa","otel-collector-otlp-sa","otel-container-logs-sa","otel-collector-k8scluster-sa","otel-collector-ta-sa"]` | Service accounts to bind the k8sattr roles to |
 | k8sattr.createRole | bool | `true` | Enable creation k8sattr role |
