@@ -17,6 +17,7 @@ mimir: https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom/push
 
 apps:
 
+  # done
   target-allocator:
     spec:
       mode: statefulset
