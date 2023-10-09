@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.6...v1.5.0) (2023-10-09)
+
+
+### 🚀 New Features
+
+* use NODE_IP for kubeletstats ([e13f8b9](https://github.com/AtomiCloud/sulfoxide.silicon/commit/e13f8b9ee8d3cabbdfd04efd91cb29d34dc46ce1))
+
 ## [1.4.6](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.5...v1.4.6) (2023-10-09)
 
 
