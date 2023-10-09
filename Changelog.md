@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.0...v1.4.1) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* serviceAccount for TA ([90e36e7](https://github.com/AtomiCloud/sulfoxide.silicon/commit/90e36e7cd9185440d3c4110be0da60f3691d7275))
+
 ## [1.4.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.3.0...v1.4.0) (2023-10-09)
 
 
