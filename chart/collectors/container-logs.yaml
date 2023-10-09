@@ -61,7 +61,7 @@ receivers:
       - from: attributes.log
         to: body
         type: move
-    start_at: beginning
+    start_at: end
 
 processors:
   batch:
