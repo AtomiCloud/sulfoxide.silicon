@@ -4,14 +4,6 @@ serviceTree:
   service: &service silicon
   layer: &layer "1"
 
-
-# -- CoreDNS Patch
-coredns:
-  # -- enable patching core DNS to resolve nodes
-  patch: true
-  # -- base domain for node patching
-  baseDomain: node.cluster.local
-
 # -- Kubernetes labels and annotations, following Service Tree
 tags: &tags
   argocd.argoproj.io/compare-options: IgnoreExtraneous
@@ -308,6 +300,10 @@ apps:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
       resources:
         limits:
           cpu: 250m
