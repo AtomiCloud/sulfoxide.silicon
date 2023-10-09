@@ -13,10 +13,10 @@ loki: https://logs-prod-020.grafana.net/loki/api/v1/push
 
 tempo: https://tempo-prod-14-prod-ap-southeast-1.grafana.net/tempo
 
-mimir: https://prometheus-prod-37-prod-ap-southeaWst-1.grafana.net/api/prom/push
+mimir: https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom
 
 apps:
-  # done
+
   target-allocator:
     spec:
       mode: statefulset
@@ -71,7 +71,7 @@ apps:
       podAnnotations:
         <<: *tags
 
-  # done
+
   k8s-cluster:
     collector: k8s-cluster.yaml
     spec:
