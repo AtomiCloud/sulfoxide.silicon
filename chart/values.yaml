@@ -82,9 +82,8 @@ k8sattr:
   # -- Service accounts to bind the k8sattr roles to
   bind:
     - *kubeletSA
-    - otel-otlp-collector
-    - otel-otlp-logs-collector
-    - otel-container-logs-collector
+    - &otlpSA otel-otlp-collector
+    - &containerLogsSA otel-otlp-logs-collector
     - *k8sclusterSA
     - *taSA
 
@@ -242,6 +241,7 @@ apps:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+      serviceAccount: *otlpSA
       ports:
         - port: 55679
           targetPort: 55679
@@ -313,6 +313,7 @@ apps:
           valueFrom:
             fieldRef:
               fieldPath: spec.nodeName
+      serviceAccount: *containerLogsSA
       ports:
         - port: 55679
           targetPort: 55679
