@@ -211,6 +211,7 @@ apps:
         serviceAccount: *taSA
         prometheusCR:
           enabled: true
+      serviceAccount: *taSA
       replicas: 1
       resources:
         limits:
