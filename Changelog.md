@@ -1,3 +1,11 @@
+## [1.4.3](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.2...v1.4.3) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* incorrect SA ([b0fd62c](https://github.com/AtomiCloud/sulfoxide.silicon/commit/b0fd62c0e922b7def65c91c8fca0e8faeac41406))
+* start_at end for filelog ([382f937](https://github.com/AtomiCloud/sulfoxide.silicon/commit/382f9370379f4e3ed22b718ec4ee5032a3c32517))
+
 ## [1.4.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.1...v1.4.2) (2023-10-09)
 
 
