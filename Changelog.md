@@ -1,3 +1,10 @@
+## [1.4.4](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.3...v1.4.4) (2023-10-09)
+
+
+### 🐛 Bug Fixes
+
+* service account missing split ([d8ede0e](https://github.com/AtomiCloud/sulfoxide.silicon/commit/d8ede0ee9095d9ecda04df53fd663be7257782e2))
+
 ## [1.4.3](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.2...v1.4.3) (2023-10-09)
 
 
