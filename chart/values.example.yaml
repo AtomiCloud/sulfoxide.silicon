@@ -6,6 +6,8 @@ tags: &tags
   atomi.cloud/landscape: *landscape
   atomi.cloud/cluster: *cluster
 
+landscape: *landscape
+
 cluster: *cluster
 
 loki: https://logs-prod-011.grafana.net/loki/api/v1/push

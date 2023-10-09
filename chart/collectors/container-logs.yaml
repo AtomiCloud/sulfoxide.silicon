@@ -164,7 +164,8 @@ exporters:
     endpoint: ${env:LOKI_ENDPOINT}
     auth:
       authenticator: basicauth/loki
-
+  debug:
+    verbosity: detailed
 extensions:
   health_check:
   pprof:
@@ -177,6 +178,9 @@ extensions:
 
 service:
   extensions: [ health_check, pprof, zpages, basicauth/loki ]
+  telemetry:
+    logs:
+      level: "debug"
   pipelines:
     logs:
       receivers: [ filelog ]

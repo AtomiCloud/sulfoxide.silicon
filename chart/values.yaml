@@ -12,6 +12,8 @@ tags: &tags
   atomi.cloud/service: *service
   atomi.cloud/layer: *layer
 
+# -- Landscape the operator is deployed to
+landscape: entei
 
 # -- Cluster the operators are deployed to
 cluster: opal

@@ -74,6 +74,7 @@ Helm chart to deploy all different types OTEL Collectors for infrastructure tele
 | kubelet.serviceAccount | object | `{"create":true,"name":"otel-collector-kubelet-sa"}` | Service account for kubelet |
 | kubelet.serviceAccount.create | bool | `true` | Enable creation of the service account |
 | kubelet.serviceAccount.name | string | `"otel-collector-kubelet-sa"` | Name of the service account |
+| landscape | string | `"entei"` | Landscape the operator is deployed to |
 | loki | string | `"https://logs-prod-011.grafana.net/loki/api/v1/push"` | Loki endpoint for logs |
 | mimir | string | `"https://prometheus-prod-18-prod-ap-southeast-0.grafana.net/api/prom/push"` | Mimir endpoint for metrics |
 | podSecurityContext | object | `{"fsGroup":1000,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | YAML Anchor for PodSecurityContext |

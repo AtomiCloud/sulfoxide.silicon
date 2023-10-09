@@ -121,6 +121,7 @@ exporters:
       enabled: true
     auth:
       authenticator: basicauth/mimir
+
 extensions:
   health_check:
   pprof:
@@ -132,6 +133,9 @@ extensions:
       password: ${env:MIMIR_PASSWORD}
 service:
   extensions: [health_check, pprof, zpages, basicauth/mimir]
+  telemetry:
+    logs:
+      level: "debug"
   pipelines:
     metrics:
       receivers: [k8s_cluster]
