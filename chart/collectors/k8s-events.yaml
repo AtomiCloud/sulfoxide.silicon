@@ -29,9 +29,12 @@ processors:
         value: otel.source, k8s.namespace.name
   resource:
     attributes:
+      - key: k8s.landscape
+        action: insert
+        value: ${env:K8S_LANDSCAPE}
       - key: k8s.cluster
         action: insert
-        value: ${env:CLUSTER}
+        value: ${env:K8S_CLUSTER}
       - action: insert
         key: loki.resource.labels
         value: >-

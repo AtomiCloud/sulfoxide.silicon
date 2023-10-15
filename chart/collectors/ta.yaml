@@ -21,9 +21,12 @@ processors:
         value: target-allocator
   resource:
     attributes:
+      - key: k8s.landscape
+        action: insert
+        value: ${env:K8S_LANDSCAPE}
       - key: k8s.cluster
         action: insert
-        value: ${env:CLUSTER}
+        value: ${env:K8S_CLUSTER}
       - key: container.id
         action: delete
   k8sattributes:

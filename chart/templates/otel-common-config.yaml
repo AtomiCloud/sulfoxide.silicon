@@ -5,7 +5,8 @@ metadata:
   labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
   annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
 data:
-  CLUSTER: "{{ .Values.cluster }}"
+  K8S_LANDSCAPE: "{{ .Values.landscape }}"
+  K8S_CLUSTER: "{{ .Values.cluster }}"
   MIMIR_ENDPOINT: "{{ .Values.mimir }}"
   LOKI_ENDPOINT: "{{ .Values.loki }}"
   TEMPO_ENDPOINT: "{{ .Values.tempo }}"

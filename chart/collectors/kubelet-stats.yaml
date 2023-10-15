@@ -35,9 +35,12 @@ processors:
         action: delete
   resource:
     attributes:
+      - key: k8s.landscape
+        action: insert
+        value: ${env:K8S_LANDSCAPE}
       - key: k8s.cluster
         action: insert
-        value: ${env:CLUSTER}
+        value: ${env:K8S_CLUSTER}
       - key: k8s.deployment.uid
         action: delete
       - key: k8s.hpa.uid
@@ -113,6 +116,14 @@ processors:
             name: k8s.pod.uid
       - sources:
           - from: connection
+  filter/drop_volume_kubeapi:
+    metrics:
+      metric:
+        - 'IsMatch(resource.attributes["k8s.volume.name"],"kube-api-access-.*")'
+  filter/drop_vcluster:
+    metrics:
+      metric:
+        - 'IsMatch(resource.attributes["k8s.namespace.name"],"(pichu|pikachu|raichu)")'
 exporters:
   prometheusremotewrite:
     endpoint: ${env:MIMIR_ENDPOINT}
@@ -135,5 +146,5 @@ service:
   pipelines:
     metrics:
       receivers: [kubeletstats]
-      processors: [batch, k8sattributes, attributes, resource]
+      processors: [k8sattributes, attributes, resource, filter/drop_vcluster, filter/drop_volume_kubeapi, batch]
       exporters: [prometheusremotewrite] # mimir
