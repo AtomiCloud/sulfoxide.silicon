@@ -1,0 +1,74 @@
+serviceTree:
+  landscape: &landscape raichu
+  cluster: &cluster opal
+
+tags: &tags
+  atomi.cloud/landscape: *landscape
+  atomi.cloud/cluster: *cluster
+
+landscape: *landscape
+cluster: *cluster
+
+loki: https://logs-prod-020.grafana.net/loki/api/v1/push
+
+tempo: https://tempo-prod-14-prod-ap-southeast-1.grafana.net/tempo
+
+mimir: https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom/push
+
+ta:
+  createRole: false
+
+apps:
+  target-allocator:
+    enable: false
+
+  otlp:
+    enable: false
+
+  container-logs:
+    enable: false
+
+  kubelet-stats:
+    spec:
+      mode: daemonset
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: "0"
+          memory: "0"
+      podAnnotations:
+        <<: *tags
+
+  k8s-cluster:
+    collector: k8s-cluster.yaml
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+  # done
+  k8s-events:
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+

@@ -218,6 +218,7 @@ securityContext: &securityContext
 # for the collector.
 apps:
   target-allocator:
+    enable: true
     collector: ta.yaml
     spec:
       mode: statefulset
@@ -249,6 +250,7 @@ apps:
         <<: *securityContext
 
   otlp:
+    enable: true
     collector: otlp.yaml
     spec:
       mode: daemonset
@@ -283,6 +285,7 @@ apps:
         <<: *securityContext
 
   kubelet-stats:
+    enable: true
     collector: kubelet-stats.yaml
     spec:
       mode: daemonset
@@ -325,6 +328,7 @@ apps:
         <<: *securityContext
 
   container-logs:
+    enable: true
     collector: container-logs.yaml
     spec:
       mode: daemonset
@@ -372,6 +376,7 @@ apps:
       securityContext: { }
 
   k8s-cluster:
+    enable: true
     collector: k8s-cluster.yaml
     spec:
       mode: deployment
@@ -402,6 +407,7 @@ apps:
         <<: *securityContext
 
   k8s-events:
+    enable: true
     collector: k8s-events.yaml
     spec:
       mode: deployment
