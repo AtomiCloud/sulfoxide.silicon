@@ -1,3 +1,10 @@
+## [1.6.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.5.0...v1.6.0) (2023-10-15)
+
+
+### 🚀 New Features
+
+* filter certain metrics ([b659e93](https://github.com/AtomiCloud/sulfoxide.silicon/commit/b659e93292b45e014b860a1d96c1d5dd9f17c273))
+
 ## [1.5.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.4.6...v1.5.0) (2023-10-09)
 
 
