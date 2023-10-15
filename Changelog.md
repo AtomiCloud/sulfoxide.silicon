@@ -1,3 +1,10 @@
+## [1.7.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.6.0...v1.7.0) (2023-10-15)
+
+
+### 🚀 New Features
+
+* collectors for vcluster ([041cd6a](https://github.com/AtomiCloud/sulfoxide.silicon/commit/041cd6a2289b6b86689648a99555330fe9f20534))
+
 ## [1.6.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.5.0...v1.6.0) (2023-10-15)
 
 
