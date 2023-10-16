@@ -7,7 +7,7 @@ receivers:
           static_configs:
             - targets: [ '0.0.0.0:8888' ]
     target_allocator:
-      endpoint: http://entei-silicon-target-allocator-targetallocator
+      endpoint: "http://${env:TA_ENDPOINT}"
       interval: 60s
       collector_id: "${POD_NAME}"
 processors:

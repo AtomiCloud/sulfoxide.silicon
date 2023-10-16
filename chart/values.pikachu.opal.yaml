@@ -9,6 +9,8 @@ tags: &tags
 landscape: *landscape
 cluster: *cluster
 
+taEndpoint: pikachu-silicon-target-allocator-targetallocator
+
 loki: https://logs-prod-020.grafana.net/loki/api/v1/push
 
 tempo: https://tempo-prod-14-prod-ap-southeast-1.grafana.net/tempo
