@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.10.0...v1.10.1) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* incorrect node scraping ([97ec3ef](https://github.com/AtomiCloud/sulfoxide.silicon/commit/97ec3efbd533c33421f3820884cc6486328ada67))
+
 ## [1.10.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.5...v1.10.0) (2023-10-16)
 
 
