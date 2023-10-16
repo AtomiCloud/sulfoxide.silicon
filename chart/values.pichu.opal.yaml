@@ -19,17 +19,26 @@ ta:
   createRole: false
 
 apps:
-
-  # done
-  target-allocator:
-    enable: false
-
   otlp:
     enable: false
 
   # done
   container-logs:
     enable: false
+
+  target-allocator:
+    spec:
+      mode: statefulset
+      replicas: 1
+      resources:
+        limits:
+          cpu: 1
+          memory: 1Gi
+        requests:
+          cpu: 125m
+          memory: 128Mi
+      podAnnotations:
+        <<: *tags
 
   kubelet-stats:
     spec:
@@ -59,7 +68,6 @@ apps:
       podAnnotations:
         <<: *tags
 
-  # done
   k8s-events:
     spec:
       mode: deployment
