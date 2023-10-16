@@ -1,3 +1,10 @@
+## [1.9.5](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.4...v1.9.5) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* diff ([252e6bf](https://github.com/AtomiCloud/sulfoxide.silicon/commit/252e6bf6dd752a264946f7d2946247a32dbcc1aa))
+
 ## [1.9.4](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.3...v1.9.4) (2023-10-16)
 
 
