@@ -14,6 +14,44 @@ rules:
       - get
       - list
       - watch
+  - apiGroups:
+    - apps
+    resources:
+      - daemonsets
+      - deployments
+      - replicasets
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - daemonsets
+      - deployments
+      - replicasets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+      - cronjobs
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - autoscaling
+    resources:
+      - horizontalpodautoscalers
+    verbs:
+      - get
+      - list
+      - watch
 ---
 {{- end -}}
 {{- if and .Values.kubelet.createRole .Values.kubelet.serviceAccount.create }}
@@ -47,6 +85,7 @@ subjects:
   - kind: ServiceAccount
     name: {{ .Values.kubelet.serviceAccount.name }}
     namespace: {{ .Release.Namespace }}
+---
 ---
 {{- end }}
 apiVersion: v1
