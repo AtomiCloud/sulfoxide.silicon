@@ -1,3 +1,11 @@
+## [1.10.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.5...v1.10.0) (2023-10-16)
+
+
+### 🚀 New Features
+
+* migrate to vcluster for kubelet stats ([5bd3a03](https://github.com/AtomiCloud/sulfoxide.silicon/commit/5bd3a03770bdd4610de36f4882627b06b33be48f))
+* migrate to vcluster for kubelet stats ([6a86264](https://github.com/AtomiCloud/sulfoxide.silicon/commit/6a86264a753b783d339c6ed53f6016467c43fc70))
+
 ## [1.9.5](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.4...v1.9.5) (2023-10-16)
 
 
