@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.0...v1.9.1) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* TA missing role ([f1bbc41](https://github.com/AtomiCloud/sulfoxide.silicon/commit/f1bbc41b80c79e244146ebbacf4c38c9da1d7634))
+
 ## [1.9.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.8.0...v1.9.0) (2023-10-16)
 
 
