@@ -1,3 +1,10 @@
+## [1.9.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.8.0...v1.9.0) (2023-10-16)
+
+
+### 🚀 New Features
+
+* migrate to doppler-silicon ([3839bf4](https://github.com/AtomiCloud/sulfoxide.silicon/commit/3839bf48796244d647211d4a6aca00507bc58039))
+
 ## [1.8.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.7.0...v1.8.0) (2023-10-16)
 
 
