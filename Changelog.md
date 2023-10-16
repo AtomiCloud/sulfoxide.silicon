@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.1...v1.9.2) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* incorrect TA endpoint ([4cc791c](https://github.com/AtomiCloud/sulfoxide.silicon/commit/4cc791c228230a8177b09e96372d625da8227180))
+
 ## [1.9.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.0...v1.9.1) (2023-10-16)
 
 
