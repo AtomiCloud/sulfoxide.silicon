@@ -4,8 +4,6 @@ receivers:
     auth_type: "serviceAccount"
     endpoint: "https://${env:KUBE_NODE_NAME}.nodes.vcluster.com/api/v1/nodes/autoscale-worker-pool-yvia6/proxy"
     insecure_skip_verify: true
-    extra_metadata_labels:
-      - container.id
     metric_groups:
       - node
       - pod
@@ -120,10 +118,6 @@ processors:
     metrics:
       metric:
         - 'IsMatch(resource.attributes["k8s.volume.name"],"kube-api-access-.*")'
-  filter/drop_vcluster:
-    metrics:
-      metric:
-        - 'IsMatch(resource.attributes["k8s.namespace.name"],"(pichu|pikachu|raichu)")'
 exporters:
   prometheusremotewrite:
     endpoint: ${env:MIMIR_ENDPOINT}
@@ -146,5 +140,5 @@ service:
   pipelines:
     metrics:
       receivers: [kubeletstats]
-      processors: [k8sattributes, attributes, resource, filter/drop_vcluster, filter/drop_volume_kubeapi, batch]
+      processors: [k8sattributes, attributes, resource, filter/drop_volume_kubeapi, batch]
       exporters: [prometheusremotewrite] # mimir
