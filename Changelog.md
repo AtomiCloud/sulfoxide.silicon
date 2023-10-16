@@ -1,3 +1,10 @@
+## [1.8.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.7.0...v1.8.0) (2023-10-16)
+
+
+### 🚀 New Features
+
+* deploy TA ([4f0e74e](https://github.com/AtomiCloud/sulfoxide.silicon/commit/4f0e74e97e0ae53412ddcaba1272c3df48aa78b4))
+
 ## [1.7.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.6.0...v1.7.0) (2023-10-15)
 
 
