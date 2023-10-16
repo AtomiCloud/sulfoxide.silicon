@@ -1,0 +1,150 @@
+receivers:
+  kubeletstats:
+    collection_interval: 60s
+    auth_type: "serviceAccount"
+    endpoint: "https://${env:KUBE_NODE_NAME}.nodes.vcluster.com:10250"
+    insecure_skip_verify: true
+    extra_metadata_labels:
+      - container.id
+    metric_groups:
+      - node
+      - pod
+      - volume
+      - container
+
+processors:
+  batch:
+  attributes:
+    actions:
+      - key: otel.source
+        action: insert
+        value: kubelet-stats
+      - key: k8s.deployment.uid
+        action: delete
+      - key: k8s.hpa.uid
+        action: delete
+      - key: k8s.namespace.uid
+        action: delete
+      - key: k8s.node.uid
+        action: delete
+      - key: k8s.pod.uid
+        action: delete
+      - key: k8s.replicaset.uid
+        action: delete
+      - key: k8s.statefulset.uid
+        action: delete
+  resource:
+    attributes:
+      - key: k8s.landscape
+        action: insert
+        value: ${env:K8S_LANDSCAPE}
+      - key: k8s.cluster
+        action: insert
+        value: ${env:K8S_CLUSTER}
+      - key: k8s.deployment.uid
+        action: delete
+      - key: k8s.hpa.uid
+        action: delete
+      - key: k8s.namespace.uid
+        action: delete
+      - key: k8s.node.uid
+        action: delete
+      - key: k8s.pod.uid
+        action: delete
+      - key: k8s.replicaset.uid
+        action: delete
+      - key: k8s.statefulset.uid
+        action: delete
+  k8sattributes:
+    auth_type: "serviceAccount"
+    passthrough: false
+    filter:
+      node_from_env_var: KUBE_NODE_NAME
+    extract:
+      metadata:
+        - k8s.pod.name
+        - k8s.pod.uid
+        - k8s.deployment.name
+        - k8s.daemonset.name
+        - k8s.statefulset.name
+        - k8s.replicaset.name
+        - k8s.job.name
+        - k8s.cronjob.name
+        - k8s.namespace.name
+        - k8s.node.name
+      annotations:
+        - tag_name: drop_log
+          key: drop_log
+          from: pod
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+      labels:
+        - tag_name: landscape
+          key: atomi.cloud/landscape
+          from: pod
+        - tag_name: cluster
+          key: atomi.cloud/cluster
+          from: pod
+        - tag_name: platform
+          key: atomi.cloud/platform
+          from: pod
+        - tag_name: module
+          key: atomi.cloud/module
+          from: pod
+        - tag_name: service
+          key: atomi.cloud/service
+          from: pod
+    pod_association:
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.ip
+      - sources:
+          - from: resource_attribute
+            name: k8s.pod.uid
+      - sources:
+          - from: connection
+  filter/drop_volume_kubeapi:
+    metrics:
+      metric:
+        - 'IsMatch(resource.attributes["k8s.volume.name"],"kube-api-access-.*")'
+  filter/drop_vcluster:
+    metrics:
+      metric:
+        - 'IsMatch(resource.attributes["k8s.namespace.name"],"(pichu|pikachu|raichu)")'
+exporters:
+  prometheusremotewrite:
+    endpoint: ${env:MIMIR_ENDPOINT}
+    resource_to_telemetry_conversion:
+      enabled: true
+    auth:
+      authenticator: basicauth/mimir
+
+extensions:
+  health_check:
+  pprof:
+  zpages:
+    endpoint: 0.0.0.0:55679
+  basicauth/mimir:
+    client_auth:
+      username: ${env:MIMIR_USER}
+      password: ${env:MIMIR_PASSWORD}
+service:
+  extensions: [ health_check, pprof, zpages, basicauth/mimir ]
+  pipelines:
+    metrics:
+      receivers: [kubeletstats]
+      processors: [k8sattributes, attributes, resource, filter/drop_vcluster, filter/drop_volume_kubeapi, batch]
+      exporters: [prometheusremotewrite] # mimir

@@ -286,7 +286,7 @@ apps:
 
   kubelet-stats:
     enable: true
-    collector: kubelet-stats.yaml
+    collector: kubelet-stats-node-name.yaml
     spec:
       mode: daemonset
       serviceAccount: *kubeletSA

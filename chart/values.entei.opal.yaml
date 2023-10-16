@@ -48,6 +48,7 @@ apps:
         <<: *tags
 
   kubelet-stats:
+    collector: kubelet-stats-node-ip.yaml
     spec:
       mode: daemonset
       resources:
