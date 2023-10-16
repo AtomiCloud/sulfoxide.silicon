@@ -72,11 +72,12 @@ Helm chart to deploy all different types OTEL Collectors for infrastructure tele
 | k8sevents.serviceAccount | object | `{"create":true,"name":"otel-collector-k8sevents-sa"}` | Service account for k8s events |
 | k8sevents.serviceAccount.create | bool | `true` | Enable creation of the service account |
 | k8sevents.serviceAccount.name | string | `"otel-collector-k8sevents-sa"` | Name of the service account |
-| kubelet | object | `{"createRole":true,"serviceAccount":{"create":true,"name":"otel-collector-kubelet-sa"}}` | Configuration for Kubelet Collector |
+| kubelet | object | `{"createRole":true,"serviceAccount":{"create":true,"name":"otel-collector-kubelet-sa"},"vclusterCompatibility":false}` | Configuration for Kubelet Collector |
 | kubelet.createRole | bool | `true` | Enable creation of kubelet role |
 | kubelet.serviceAccount | object | `{"create":true,"name":"otel-collector-kubelet-sa"}` | Service account for kubelet |
 | kubelet.serviceAccount.create | bool | `true` | Enable creation of the service account |
 | kubelet.serviceAccount.name | string | `"otel-collector-kubelet-sa"` | Name of the service account |
+| kubelet.vclusterCompatibility | bool | `false` | VCluster Compatibility |
 | landscape | string | `"entei"` | Landscape the operator is deployed to |
 | loki | string | `"https://logs-prod-011.grafana.net/loki/api/v1/push"` | Loki endpoint for logs |
 | mimir | string | `"https://prometheus-prod-18-prod-ap-southeast-0.grafana.net/api/prom/push"` | Mimir endpoint for metrics |

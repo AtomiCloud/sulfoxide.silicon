@@ -31,6 +31,7 @@ configMapName: &configMapName otel-common-config-map
 
 # -- Configuration for Target Allocator
 ta:
+
   # -- Enable creation of target allocator roles
   createRole: true
   # -- Service account for target allocation
@@ -66,6 +67,8 @@ k8scluster:
 kubelet:
   # -- Enable creation of kubelet role
   createRole: true
+  # -- VCluster Compatibility
+  vclusterCompatibility: false
   # -- Service account for kubelet
   serviceAccount:
     # -- Enable creation of the service account

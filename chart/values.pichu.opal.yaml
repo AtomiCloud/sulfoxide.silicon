@@ -17,6 +17,10 @@ tempo: https://tempo-prod-14-prod-ap-southeast-1.grafana.net/tempo
 
 mimir: https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom/push
 
+
+kubelet:
+  vclusterCompatibility: true
+
 apps:
   otlp:
     enable: false
