@@ -1,3 +1,10 @@
+## [1.9.4](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.3...v1.9.4) (2023-10-16)
+
+
+### 🐛 Bug Fixes
+
+* split node-name and node-ip kubelet stats ([a120b50](https://github.com/AtomiCloud/sulfoxide.silicon/commit/a120b50538038b1d91cdf023bd76bdd5620ddcdd))
+
 ## [1.9.3](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.9.2...v1.9.3) (2023-10-16)
 
 
