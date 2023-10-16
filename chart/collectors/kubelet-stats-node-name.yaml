@@ -2,7 +2,7 @@ receivers:
   kubeletstats:
     collection_interval: 60s
     auth_type: "serviceAccount"
-    endpoint: "https://${env:KUBE_NODE_NAME}.nodes.vcluster.com/api/v1/nodes/autoscale-worker-pool-yvia6/proxy"
+    endpoint: "https://${env:KUBE_NODE_NAME}.nodes.vcluster.com/api/v1/nodes/${env:KUBE_NODE_NAME}/proxy"
     insecure_skip_verify: true
     metric_groups:
       - node
