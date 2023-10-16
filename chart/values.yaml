@@ -107,7 +107,7 @@ k8sattr:
 # -- Create SecretStore via secret of secrets pattern
 sulfoxide-bromine:
   # -- Store name to create
-  storeName: doppler
+  storeName: doppler-silicon
   # -- Secret of Secrets reference
   rootSecret:
     # -- DOPPLER Token Reference
@@ -185,7 +185,7 @@ auth:
     # -- Secret Store to use for secrets
     secretStore:
       # -- Name of the secret store
-      name: doppler
+      name: doppler-silicon
       # -- Kind of the secret store, either `ClusterSecretStore` or `SecretStore`
       kind: SecretStore
     # -- External Secret Policy
