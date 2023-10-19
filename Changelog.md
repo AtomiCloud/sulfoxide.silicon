@@ -1,3 +1,10 @@
+## [1.11.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.10.1...v1.11.0) (2023-10-19)
+
+
+### 🚀 New Features
+
+* reduce scrape interval to 2minutes ([9340b12](https://github.com/AtomiCloud/sulfoxide.silicon/commit/9340b1202a1f55853b486ebf5dfd8258b44ed219))
+
 ## [1.10.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.10.0...v1.10.1) (2023-10-16)
 
 
