@@ -1,6 +1,6 @@
 receivers:
   kubeletstats:
-    collection_interval: 60s
+    collection_interval: 120s
     auth_type: "serviceAccount"
     endpoint: "https://${env:KUBE_NODE_NAME}.nodes.vcluster.com/api/v1/nodes/${env:KUBE_NODE_NAME}/proxy"
     insecure_skip_verify: true

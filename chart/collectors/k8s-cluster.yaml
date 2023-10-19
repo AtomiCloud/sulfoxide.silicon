@@ -1,6 +1,6 @@
 receivers:
   k8s_cluster:
-    collection_interval: 60s
+    collection_interval: 120s
     node_conditions_to_report:
       - Ready
       - MemoryPressure

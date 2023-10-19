@@ -1,6 +1,6 @@
 receivers:
   kubeletstats:
-    collection_interval: 60s
+    collection_interval: 120s
     auth_type: "serviceAccount"
     endpoint: "https://${env:NODE_IP}:10250"
     insecure_skip_verify: true
