@@ -8,7 +8,7 @@ Helm chart to deploy all different types OTEL Collectors for infrastructure tele
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://ghcr.io/atomicloud/sulfoxide.bromine | sulfoxide-bromine | 1.2.2 |
+| oci://ghcr.io/atomicloud/sulfoxide.bromine | sulfoxide-bromine | 1.2.3 |
 
 ## Values
 
