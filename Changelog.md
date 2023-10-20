@@ -1,3 +1,10 @@
+## [1.12.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.11.1...v1.12.0) (2023-10-20)
+
+
+### 📦 Upstreams Changes
+
+* **bromine:** 1.2.3 ([57f96b5](https://github.com/AtomiCloud/sulfoxide.silicon/commit/57f96b5ea414562144905a7fb4b9d4d0d87e03a0))
+
 ## [1.11.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.11.0...v1.11.1) (2023-10-20)
 
 
