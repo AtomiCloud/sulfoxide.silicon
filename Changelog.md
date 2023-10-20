@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.11.0...v1.11.1) (2023-10-20)
+
+
+### 🐛 Bug Fixes
+
+* missing update ([ddf32b9](https://github.com/AtomiCloud/sulfoxide.silicon/commit/ddf32b9b85274fdb9052291408b8e743a618d6f8))
+
 ## [1.11.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.10.1...v1.11.0) (2023-10-19)
 
 
