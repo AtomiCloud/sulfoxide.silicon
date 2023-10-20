@@ -8,7 +8,7 @@ Helm chart to deploy all different types OTEL Collectors for infrastructure tele
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://ghcr.io/atomicloud/sulfoxide.bromine | sulfoxide-bromine | 1.1.0 |
+| oci://ghcr.io/atomicloud/sulfoxide.bromine | sulfoxide-bromine | 1.2.2 |
 
 ## Values
 
@@ -87,7 +87,9 @@ Helm chart to deploy all different types OTEL Collectors for infrastructure tele
 | podSecurityContext | object | `{"fsGroup":1000,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | YAML Anchor for PodSecurityContext |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":1000,"runAsNonRoot":true,"runAsUser":1000}` | YAML Anchor for SecurityContext |
 | serviceTree | object | `{"layer":"1","platform":"sulfoxide","service":"silicon"}` | AtomiCloud Service Tree. See [ServiceTree](https://atomicloud.larksuite.com/wiki/OkfJwTXGFiMJkrk6W3RuwRrZs64?theme=DARK&contentTheme=DARK#MHw5d76uDo2tBLx86cduFQMRsBb) |
-| sulfoxide-bromine | object | `{"rootSecret":{"ref":"SULFOXIDE_SILICON"},"storeName":"doppler-silicon"}` | Create SecretStore via secret of secrets pattern |
+| sulfoxide-bromine | object | `{"annotations":{"helm.sh/hook":"pre-install,pre-upgrade","helm.sh/weight":"-5"},"rootSecret":{"ref":"SULFOXIDE_SILICON"},"storeName":"doppler-silicon"}` | Create SecretStore via secret of secrets pattern |
+| sulfoxide-bromine.annotations."helm.sh/hook" | string | `"pre-install,pre-upgrade"` | Helm hook to run |
+| sulfoxide-bromine.annotations."helm.sh/weight" | string | `"-5"` | Helm weight to run |
 | sulfoxide-bromine.rootSecret | object | `{"ref":"SULFOXIDE_SILICON"}` | Secret of Secrets reference |
 | sulfoxide-bromine.rootSecret.ref | string | `"SULFOXIDE_SILICON"` | DOPPLER Token Reference |
 | sulfoxide-bromine.storeName | string | `"doppler-silicon"` | Store name to create |
