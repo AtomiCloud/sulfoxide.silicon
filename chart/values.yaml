@@ -110,16 +110,17 @@ k8sattr:
 # -- Create SecretStore via secret of secrets pattern
 sulfoxide-bromine:
   annotations:
-    # -- Helm hook to run
-    helm.sh/hook: pre-install,pre-upgrade
-    # -- Helm weight to run
-    helm.sh/weight: "-5"
+    argocd.argoproj.io/sync-wave: "-3"
   # -- Store name to create
   storeName: doppler-silicon
   # -- Secret of Secrets reference
   rootSecret:
     # -- DOPPLER Token Reference
     ref: "SULFOXIDE_SILICON"
+
+# -- Secret Annotations (External Secrets) to control synchronization
+secretAnnotation:
+  argocd.argoproj.io/sync-wave: "-2"
 
 # -- Auth configuration for the collectors
 auth:

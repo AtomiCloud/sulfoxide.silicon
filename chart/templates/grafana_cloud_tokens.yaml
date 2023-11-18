@@ -5,6 +5,7 @@ metadata:
   name: {{ .Release.Name -}}-external-secret
   labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
   annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
+    {{- toYaml .Values.secretAnnotation | nindent 4 }}
 spec:
   refreshInterval: 1m
   secretStoreRef:
@@ -47,6 +48,7 @@ metadata:
   name: {{ .Values.auth.secretName }}
   labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
   annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
+    {{- toYaml .Values.secretAnnotation | nindent 4 }}
 data:
   {{ .Values.auth.mimir.user.local }}: {{ b64enc .Values.auth.internal.mimir.user }}
   {{ .Values.auth.mimir.password.local }}: {{ b64enc .Values.auth.internal.mimir.password }}
