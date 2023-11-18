@@ -1,0 +1,84 @@
+serviceTree:
+  landscape: &landscape pichu
+  cluster: &cluster ruby
+
+tags: &tags
+  atomi.cloud/landscape: *landscape
+  atomi.cloud/cluster: *cluster
+
+landscape: *landscape
+cluster: *cluster
+
+taEndpoint: pichu-silicon-target-allocator-targetallocator
+
+loki: https://logs-prod-020.grafana.net/loki/api/v1/push
+
+tempo: https://tempo-prod-14-prod-ap-southeast-1.grafana.net/tempo
+
+mimir: https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom/push
+
+apps:
+  otlp:
+    enable: false
+
+  # done
+  container-logs:
+    enable: false
+
+  target-allocator:
+    spec:
+      mode: statefulset
+      replicas: 1
+      resources:
+        limits:
+          cpu: '1'
+          memory: 1Gi
+        requests:
+          cpu: 125m
+          memory: 128Mi
+      podAnnotations:
+        <<: *tags
+
+  kubelet-stats:
+    spec:
+      mode: daemonset
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: "0"
+          memory: "0"
+      podAnnotations:
+        <<: *tags
+
+  k8s-cluster:
+    collector: k8s-cluster.yaml
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+  k8s-events:
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+

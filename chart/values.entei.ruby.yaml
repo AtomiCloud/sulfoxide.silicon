@@ -1,0 +1,109 @@
+serviceTree:
+  landscape: &landscape entei
+  cluster: &cluster ruby
+
+tags: &tags
+  atomi.cloud/landscape: *landscape
+  atomi.cloud/cluster: *cluster
+
+landscape: *landscape
+cluster: *cluster
+
+taEndpoint: entei-silicon-target-allocator-targetallocator
+
+loki: https://logs-prod-020.grafana.net/loki/api/v1/push
+
+tempo: https://tempo-prod-14-prod-ap-southeast-1.grafana.net/tempo
+
+mimir: https://prometheus-prod-37-prod-ap-southeast-1.grafana.net/api/prom/push
+
+apps:
+
+  # done
+  target-allocator:
+    spec:
+      mode: statefulset
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 100m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+  otlp:
+    spec:
+      mode: daemonset
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: "0"
+          memory: "0"
+      podAnnotations:
+        <<: *tags
+
+  kubelet-stats:
+    collector: kubelet-stats-node-ip.yaml
+    spec:
+      mode: daemonset
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: "0"
+          memory: "0"
+      podAnnotations:
+        <<: *tags
+
+  # done
+  container-logs:
+    spec:
+      mode: daemonset
+      resources:
+        requests:
+          cpu: "0"
+          memory: "0"
+        limits:
+          cpu: 250m
+          memory: 1Gi
+      podAnnotations:
+        <<: *tags
+
+
+  k8s-cluster:
+    collector: k8s-cluster.yaml
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+  # done
+  k8s-events:
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 50m
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+
