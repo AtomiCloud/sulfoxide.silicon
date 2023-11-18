@@ -1,3 +1,10 @@
+## [1.13.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.12.0...v1.13.0) (2023-11-18)
+
+
+### 🚀 New Features
+
+* ruby values ([d7181e6](https://github.com/AtomiCloud/sulfoxide.silicon/commit/d7181e6b8d3821f69402780dc62914bf9a119d64))
+
 ## [1.12.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.11.1...v1.12.0) (2023-10-20)
 
 
