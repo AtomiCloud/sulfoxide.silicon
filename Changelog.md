@@ -1,3 +1,10 @@
+## [1.13.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.13.0...v1.13.1) (2023-11-18)
+
+
+### 🐛 Bug Fixes
+
+* sync wave for secretstore externalsecret ([6aa8ac7](https://github.com/AtomiCloud/sulfoxide.silicon/commit/6aa8ac745b76cb2f6be3c9697033ed855d6ba4f6))
+
 ## [1.13.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.12.0...v1.13.0) (2023-11-18)
 
 
