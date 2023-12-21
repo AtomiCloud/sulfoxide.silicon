@@ -1,11 +1,12 @@
 receivers:
   kubeletstats:
-    collection_interval: 120s
+    collection_interval: 15s
     auth_type: "serviceAccount"
     endpoint: "https://${env:NODE_IP}:10250"
     insecure_skip_verify: true
     extra_metadata_labels:
       - container.id
+      - k8s.volume.type
     metric_groups:
       - node
       - pod
@@ -14,6 +15,8 @@ receivers:
 
 processors:
   batch:
+    send_batch_size: 10000
+    timeout: 10s
   attributes:
     actions:
       - key: otel.source
@@ -124,27 +127,22 @@ processors:
     metrics:
       metric:
         - 'IsMatch(resource.attributes["k8s.namespace.name"],"(pichu|pikachu|raichu)")'
+
 exporters:
-  prometheusremotewrite:
-    endpoint: ${env:MIMIR_ENDPOINT}
-    resource_to_telemetry_conversion:
-      enabled: true
-    auth:
-      authenticator: basicauth/mimir
+  otlphttp/openobserve:
+    endpoint: ${env:O2_ENDPOINT}
+    headers:
+      Authorization: Basic ${env:O2_AUTH}
 
 extensions:
   health_check:
   pprof:
   zpages:
     endpoint: 0.0.0.0:55679
-  basicauth/mimir:
-    client_auth:
-      username: ${env:MIMIR_USER}
-      password: ${env:MIMIR_PASSWORD}
 service:
-  extensions: [ health_check, pprof, zpages, basicauth/mimir ]
+  extensions: [ health_check, pprof, zpages ]
   pipelines:
     metrics:
       receivers: [kubeletstats]
       processors: [k8sattributes, attributes, resource, filter/drop_vcluster, filter/drop_volume_kubeapi, batch]
-      exporters: [prometheusremotewrite] # mimir
+      exporters: [otlphttp/openobserve] # mimir

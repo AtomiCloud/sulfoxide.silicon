@@ -1,0 +1,34 @@
+{{- if .Values.auth.external.enable }}
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: {{ .Release.Name -}}-external-secret
+  labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
+  annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
+    {{- toYaml .Values.secretAnnotation | nindent 4 }}
+spec:
+  refreshInterval: 1m
+  secretStoreRef:
+    name: {{ .Values.auth.external.secretStore.name }}
+    kind: {{ .Values.auth.external.secretStore.kind }}
+  target:
+    name: {{ .Values.auth.secretName }}
+    creationPolicy: {{ .Values.auth.external.policy.creation }}
+    deletionPolicy: {{ .Values.auth.external.policy.deletion }}
+  data:
+    - secretKey: O2_AUTH
+      remoteRef:
+        key: {{ .Values.auth.o2remote }}
+---
+{{- end }}
+{{- if .Values.auth.internal.enable }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.auth.secretName }}
+  labels: {{- include "sulfoxide-silicon.labels" .  | nindent 4 }}
+  annotations: {{- include "sulfoxide-silicon.annotations" .  | nindent 4 }}
+    {{- toYaml .Values.secretAnnotation | nindent 4 }}
+data:
+  O2_AUTH: {{ b64enc .Values.auth.internal.o2 }}
+{{- end }}

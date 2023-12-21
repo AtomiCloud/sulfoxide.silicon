@@ -17,14 +17,8 @@ landscape: entei
 # -- Cluster the operators are deployed to
 cluster: opal
 
-# -- Loki endpoint for logs
-loki: https://logs-prod-011.grafana.net/loki/api/v1/push
-
-# -- Tempo endpoint for traces
-tempo: https://tempo-prod-07-prod-ap-southeast-0.grafana.net/tempo
-
-# -- Mimir endpoint for metrics
-mimir: https://prometheus-prod-18-prod-ap-southeast-0.grafana.net/api/prom/push
+# -- Open Observe Endpoint
+o2Endpoint: "https://api.openobserve.ai/api/ernest_organization_3786_HyhCNH5kmTNlaMy/"
 
 # -- Name of the common config map to propagate to all collectors
 configMapName: &configMapName otel-common-config-map
@@ -125,68 +119,15 @@ secretAnnotation:
 # -- Auth configuration for the collectors
 auth:
   # -- Name of the secret to use for the collector
-  secretName: &secretName grafana-cloud-secrets
-  # -- Mimir auth configuration
-  mimir:
-    # -- Username for Mimir
-    user:
-      # -- Local Key reference
-      local: MIMIR_USER
-      # -- Remote Key reference
-      remote: MANUAL_MIMIR_USER
-    # -- Password for Mimir
-    password:
-      # -- Local Key reference
-      local: MIMIR_PASSWORD
-      # -- Remote Key reference
-      remote: MANUAL_MIMIR_PASSWORD
-  # -- Loki auth configuration
-  loki:
-    # -- Username for Loki
-    user:
-      # -- Local Key reference
-      local: LOKI_USER
-      # -- Remote Key reference
-      remote: MANUAL_LOKI_USER
-    # -- Password for Loki
-    password:
-      # -- Local Key reference
-      local: LOKI_PASSWORD
-      # -- Remote Key reference
-      remote: MANUAL_LOKI_PASSWORD
-  # -- Tempo auth configuration
-  tempo:
-    # -- Username for Tempo
-    user:
-      # -- Local Key reference
-      local: TEMPO_USER
-      # -- Remote Key reference
-      remote: MANUAL_TEMPO_USER
-    # -- Password for Tempo
-    password:
-      # -- Local Key reference
-      local: TEMPO_PASSWORD
-      # -- Remote Key reference
-      remote: MANUAL_TEMPO_PASSWORD
+  secretName: &secretName o2-cloud-secrets
+  # -- Remote OpenObserve Token
+  o2remote: MANUAL_O2_TOKEN
   # -- Use internal auth for the collectors (hard coded password)
   internal:
     # -- Enable internal auth
     enable: false
-    mimir:
-      # -- Username for Mimir
-      user: ""
-      # -- Password for Mimir
-      password: ""
-    loki:
-      # -- Username for Loki
-      user: ""
-      # -- Password for Loki
-      password: ""
-    tempo:
-      # -- Username for Tempo
-      user: ""
-      # -- Password for Tempo
-      password: ""
+    # -- OpenObserve plaintext token
+    o2: sometoken
   # -- Use external auth for the collectors
   external:
     # -- Enable external auth

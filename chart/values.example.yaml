@@ -10,9 +10,7 @@ landscape: *landscape
 
 cluster: *cluster
 
-loki: https://logs-prod-011.grafana.net/loki/api/v1/push
-tempo: https://tempo-prod-07-prod-ap-southeast-0.grafana.net/tempo
-mimir: https://prometheus-prod-18-prod-ap-southeast-0.grafana.net/api/prom/push
+o2Endpoint: https://api.openobserve.ai/api/ernest_organization_3786_HyhCNH5kmTNlaMy/
 
 apps:
   target-allocator:

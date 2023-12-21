@@ -5,6 +5,8 @@ receivers:
       http:
 processors:
   batch:
+    send_batch_size: 10000
+    timeout: 10s
   k8sattributes:
     auth_type: "serviceAccount"
     passthrough: false
@@ -91,51 +93,29 @@ processors:
           k8s.deployment.name, k8s.statefulset.name, k8s.daemonset.name, 
           k8s.cronjob.name
 exporters:
-  prometheusremotewrite:
-    endpoint: ${env:MIMIR_ENDPOINT}
-    resource_to_telemetry_conversion:
-      enabled: true
-    auth:
-      authenticator: basicauth/mimir
-  otlphttp:
-    endpoint: ${env:TEMPO_ENDPOINT}
-    auth:
-      authenticator: basicauth/tempo
-  loki:
-    endpoint: ${env:LOKI_ENDPOINT}
-    auth:
-      authenticator: basicauth/loki
-  logging:
+  otlphttp/openobserve:
+    endpoint: ${env:O2_ENDPOINT}
+    headers:
+      Authorization: Basic ${env:O2_AUTH}
 
 extensions:
   health_check:
   pprof:
   zpages:
     endpoint: 0.0.0.0:55679
-  basicauth/mimir:
-    client_auth:
-      username: ${env:MIMIR_USER}
-      password: ${env:MIMIR_PASSWORD}
-  basicauth/tempo:
-    client_auth:
-      username: ${env:TEMPO_USER}
-      password: ${env:TEMPO_PASSWORD}
-  basicauth/loki:
-    client_auth:
-      username: ${env:LOKI_USER}
-      password: ${env:LOKI_PASSWORD}
+
 service:
-  extensions: [ health_check, pprof, zpages, basicauth/mimir, basicauth/tempo, basicauth/loki ]
+  extensions: [ health_check, pprof, zpages ]
   pipelines:
     logs:
       receivers: [ otlp ]
       processors: [ k8sattributes, resource, attributes, batch ]
-      exporters: [ loki ]
+      exporters: [ otlphttp/openobserve ]
     traces:
       receivers: [ otlp ]
       processors: [ k8sattributes, resource, attributes, batch ]
-      exporters: [ otlphttp ]
+      exporters: [ otlphttp/openobserve ]
     metrics:
       receivers: [ otlp ]
       processors: [ k8sattributes, resource, attributes, batch ]
-      exporters: [ prometheusremotewrite ] # mimir
+      exporters: [ otlphttp/openobserve ]

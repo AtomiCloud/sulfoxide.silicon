@@ -2,21 +2,19 @@ receivers:
   k8s_events:
 
 exporters:
-  loki:
-    endpoint: ${env:LOKI_ENDPOINT}
-    auth:
-      authenticator: basicauth/loki
   logging:
+  otlphttp/openobserve_k8s_events:
+    endpoint: ${env:O2_ENDPOINT}
+    headers:
+      Authorization: Basic ${env:O2_AUTH}
+      stream-name: k8s_events
 
 extensions:
   health_check:
   pprof:
   zpages:
     endpoint: 0.0.0.0:55679
-  basicauth/loki:
-    client_auth:
-      username: ${env:LOKI_USER}
-      password: ${env:LOKI_PASSWORD}
+
 processors:
   batch:
   attributes:
@@ -24,9 +22,6 @@ processors:
       - key: otel.source
         action: insert
         value: k8s-events
-      - action: insert
-        key: loki.attribute.labels
-        value: otel.source, k8s.namespace.name
   resource:
     attributes:
       - key: k8s.landscape
@@ -35,15 +30,11 @@ processors:
       - key: k8s.cluster
         action: insert
         value: ${env:K8S_CLUSTER}
-      - action: insert
-        key: loki.resource.labels
-        value: >-
-          k8s.cluster
 
 service:
-  extensions: [ health_check, pprof, zpages, basicauth/loki ]
+  extensions: [ health_check, pprof, zpages ]
   pipelines:
     logs:
-      receivers: [k8s_events]
-      processors: [batch, attributes, resource]
-      exporters: [loki]
+      receivers: [ k8s_events ]
+      processors: [ batch, attributes, resource ]
+      exporters: [ otlphttp/openobserve_k8s_events ]

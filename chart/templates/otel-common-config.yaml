@@ -8,6 +8,4 @@ data:
   K8S_LANDSCAPE: "{{ .Values.landscape }}"
   K8S_CLUSTER: "{{ .Values.cluster }}"
   TA_ENDPOINT: "{{ .Values.taEndpoint }}"
-  MIMIR_ENDPOINT: "{{ .Values.mimir }}"
-  LOKI_ENDPOINT: "{{ .Values.loki }}"
-  TEMPO_ENDPOINT: "{{ .Values.tempo }}"
+  O2_ENDPOINT: "{{ .Values.o2Endpoint }}"
