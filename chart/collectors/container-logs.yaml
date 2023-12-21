@@ -155,7 +155,6 @@ processors:
         - 'resource.attributes["drop_log"] == "true"'
 
 exporters:
-  debug:
   otlphttp/openobserve:
     endpoint: ${env:O2_ENDPOINT}
     headers:

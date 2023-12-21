@@ -2,7 +2,6 @@ receivers:
   k8s_events:
 
 exporters:
-  logging:
   otlphttp/openobserve_k8s_events:
     endpoint: ${env:O2_ENDPOINT}
     headers:
