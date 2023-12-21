@@ -1,3 +1,10 @@
+## [1.14.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.13.1...v1.14.0) (2023-12-21)
+
+
+### 🚀 New Features
+
+* migrate to O2 ([36180f7](https://github.com/AtomiCloud/sulfoxide.silicon/commit/36180f71e9c931b87eaafb85d7a834ff22429962))
+
 ## [1.13.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.13.0...v1.13.1) (2023-11-18)
 
 
