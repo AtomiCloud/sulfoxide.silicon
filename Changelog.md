@@ -1,3 +1,10 @@
+## [1.14.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.14.0...v1.14.1) (2023-12-21)
+
+
+### 🐛 Bug Fixes
+
+* incorrect debug exporter ([ceb64a6](https://github.com/AtomiCloud/sulfoxide.silicon/commit/ceb64a65e10c2261717d44aecf22b3ca58d59f9e))
+
 ## [1.14.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.13.1...v1.14.0) (2023-12-21)
 
 
