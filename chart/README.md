@@ -54,7 +54,7 @@ Helm chart to deploy all different types OTEL Collectors for infrastructure tele
 | kubelet.serviceAccount.name | string | `"otel-collector-kubelet-sa"` | Name of the service account |
 | kubelet.vclusterCompatibility | bool | `false` | VCluster Compatibility |
 | landscape | string | `"entei"` | Landscape the operator is deployed to |
-| o2Endpoint | string | `"https://api.openobserve.ai/api/ernest_organization_3786_HyhCNH5kmTNlaMy/"` | Open Observe Endpoint |
+| o2Endpoint | string | `"https://api.openobserve.ai/api/atomicloud_MwvsSHPiOT9uFdn/"` | Open Observe Endpoint |
 | otlp.serviceAccount | object | `{"create":true,"name":"otel-collector-otlp-sa"}` | Service account for OTLP |
 | otlp.serviceAccount.create | bool | `true` | Enable creation of the service account |
 | otlp.serviceAccount.name | string | `"otel-collector-otlp-sa"` | Name of the service account |

@@ -18,7 +18,7 @@ landscape: entei
 cluster: opal
 
 # -- Open Observe Endpoint
-o2Endpoint: "https://api.openobserve.ai/api/ernest_organization_3786_HyhCNH5kmTNlaMy/"
+o2Endpoint: "https://api.openobserve.ai/api/atomicloud_MwvsSHPiOT9uFdn/"
 
 # -- Name of the common config map to propagate to all collectors
 configMapName: &configMapName otel-common-config-map
