@@ -1,3 +1,10 @@
+## [1.15.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.14.1...v1.15.0) (2023-12-24)
+
+
+### 🚀 New Features
+
+* migrate logs to Loki in Grafana Cloud ([5a349b3](https://github.com/AtomiCloud/sulfoxide.silicon/commit/5a349b3b8c925ba08224ecb20a88856f0f6180f4))
+
 ## [1.14.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.14.0...v1.14.1) (2023-12-21)
 
 
