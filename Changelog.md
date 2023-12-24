@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.15.0...v1.15.1) (2023-12-24)
+
+
+### 🐛 Bug Fixes
+
+* missing loki labeling ([6541ddc](https://github.com/AtomiCloud/sulfoxide.silicon/commit/6541ddc0a74b9996f9b1aa4b97918ff3a5b63bb4))
+
 ## [1.15.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.14.1...v1.15.0) (2023-12-24)
 
 
