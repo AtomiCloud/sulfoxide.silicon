@@ -2,17 +2,20 @@ receivers:
   k8s_events:
 
 exporters:
-  otlphttp/openobserve_k8s_events:
-    endpoint: ${env:O2_ENDPOINT}
-    headers:
-      Authorization: Basic ${env:O2_AUTH}
-      stream-name: k8s_events
+  loki:
+    endpoint: ${env:LOKI_ENDPOINT}
+    auth:
+      authenticator: basicauth/loki
 
 extensions:
   health_check:
   pprof:
   zpages:
     endpoint: 0.0.0.0:55679
+  basicauth/loki:
+    client_auth:
+      username: ${env:LOKI_USER}
+      password: ${env:LOKI_TOKEN}
 
 processors:
   batch:
@@ -31,9 +34,9 @@ processors:
         value: ${env:K8S_CLUSTER}
 
 service:
-  extensions: [ health_check, pprof, zpages ]
+  extensions: [ health_check, pprof, zpages, basicauth/loki ]
   pipelines:
     logs:
       receivers: [ k8s_events ]
       processors: [ batch, attributes, resource ]
-      exporters: [ otlphttp/openobserve_k8s_events ]
+      exporters: [ loki ]

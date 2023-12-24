@@ -20,6 +20,9 @@ cluster: opal
 # -- Open Observe Endpoint
 o2Endpoint: "https://api.openobserve.ai/api/atomicloud_MwvsSHPiOT9uFdn/"
 
+# -- Grafana Cloud Loki Endpoint
+lokiEndpoint: "https://logs-prod-020.grafana.net/loki/api/v1/push"
+
 # -- Name of the common config map to propagate to all collectors
 configMapName: &configMapName otel-common-config-map
 
@@ -120,14 +123,28 @@ secretAnnotation:
 auth:
   # -- Name of the secret to use for the collector
   secretName: &secretName o2-cloud-secrets
-  # -- Remote OpenObserve Token
-  o2remote: MANUAL_O2_TOKEN
+  # -- Remote Tokens
+  remote:
+    # -- OpenObserve Token
+    o2: MANUAL_O2_TOKEN
+    loki:
+      # -- Grafana Cloud Loki User
+      user: MANUAL_LOKI_USER
+      # -- Grafana Cloud Loki Token
+      token: MANUAL_LOKI_TOKEN
+
   # -- Use internal auth for the collectors (hard coded password)
   internal:
     # -- Enable internal auth
     enable: false
     # -- OpenObserve plaintext token
     o2: sometoken
+    # -- Grafana Cloud Loki plaintext user
+    loki:
+      # -- Grafana Cloud Loki plaintext user
+      user: someuser
+      # -- Grafana Cloud Loki plaintext token
+      token: sometoken
   # -- Use external auth for the collectors
   external:
     # -- Enable external auth
