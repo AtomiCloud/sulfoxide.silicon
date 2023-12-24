@@ -24,6 +24,9 @@ processors:
       - key: otel.source
         action: insert
         value: k8s-events
+      - action: insert
+        key: loki.attribute.labels
+        value: otel.source, k8s.namespace.name
   resource:
     attributes:
       - key: k8s.landscape
@@ -32,6 +35,10 @@ processors:
       - key: k8s.cluster
         action: insert
         value: ${env:K8S_CLUSTER}
+      - action: insert
+        key: loki.resource.labels
+        value: >-
+          k8s.cluster
 
 service:
   extensions: [ health_check, pprof, zpages, basicauth/loki ]

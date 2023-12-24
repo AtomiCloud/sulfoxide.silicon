@@ -78,11 +78,21 @@ processors:
       - key: otel.source
         action: insert
         value: otlp
+      - action: insert
+        key: loki.attribute.labels
+        value: otel.source
 
   resource:
     attributes:
       - key: container.id
         action: delete
+      - action: insert
+        key: loki.resource.labels
+        value: >-
+          module, landscape, platform, service, cluster
+          k8s.namespace.name, k8s.node.name, 
+          k8s.deployment.name, k8s.statefulset.name, k8s.daemonset.name, 
+          k8s.cronjob.name
 
 exporters:
   otlphttp/openobserve:
