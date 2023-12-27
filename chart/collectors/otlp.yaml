@@ -81,7 +81,6 @@ processors:
       - action: insert
         key: loki.attribute.labels
         value: otel.source
-
   resource:
     attributes:
       - key: container.id

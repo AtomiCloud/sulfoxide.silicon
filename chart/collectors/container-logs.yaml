@@ -163,6 +163,7 @@ processors:
     logs:
       log_record:
         - 'resource.attributes["drop_log"] == "true"'
+        - 'resource.attributes["k8s.daemonset.name"] == "konnectivity-agent"'
 
 exporters:
   loki:
@@ -184,5 +185,5 @@ service:
   pipelines:
     logs:
       receivers: [ filelog ]
-      processors: [ k8sattributes, resource, attributes, batch ]
+      processors: [ k8sattributes, resource, attributes, filter, batch ]
       exporters: [ loki ]
