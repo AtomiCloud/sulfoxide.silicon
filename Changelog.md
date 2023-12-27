@@ -1,3 +1,10 @@
+## [1.15.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.15.1...v1.15.2) (2023-12-27)
+
+
+### 🐛 Bug Fixes
+
+* missing filter in pipeline ([0fe600f](https://github.com/AtomiCloud/sulfoxide.silicon/commit/0fe600fd923b01aacb6f0264ed075416e888ba22))
+
 ## [1.15.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.15.0...v1.15.1) (2023-12-24)
 
 
