@@ -24,7 +24,7 @@ o2Endpoint: "https://api.openobserve.ai/api/atomicloud_MwvsSHPiOT9uFdn/"
 lokiEndpoint: "https://logs-prod-020.grafana.net/loki/api/v1/push"
 
 # -- Grafana Cloud Tempo Endpoint
-tempoEndpoint: "https://tempo-prod-14-prod-ap-southeast-1.grafana.net/tempo"
+tempoEndpoint: "https://otlp-gateway-prod-ap-southeast-1.grafana.net/otlp"
 
 # -- Name of the common config map to propagate to all collectors
 configMapName: &configMapName otel-common-config-map
