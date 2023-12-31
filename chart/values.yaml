@@ -23,6 +23,9 @@ o2Endpoint: "https://api.openobserve.ai/api/atomicloud_MwvsSHPiOT9uFdn/"
 # -- Grafana Cloud Loki Endpoint
 lokiEndpoint: "https://logs-prod-020.grafana.net/loki/api/v1/push"
 
+# -- Grafana Cloud Tempo Endpoint
+tempoEndpoint: "https://tempo-prod-14-prod-ap-southeast-1.grafana.net/tempo"
+
 # -- Name of the common config map to propagate to all collectors
 configMapName: &configMapName otel-common-config-map
 
@@ -132,6 +135,11 @@ auth:
       user: MANUAL_LOKI_USER
       # -- Grafana Cloud Loki Token
       token: MANUAL_LOKI_TOKEN
+    tempo:
+      # -- Grafana Cloud Tempo User
+      user: MANUAL_TEMPO_USER
+      # -- Grafana Cloud Tempo Token
+      token: MANUAL_TEMPO_TOKEN
 
   # -- Use internal auth for the collectors (hard coded password)
   internal:
@@ -144,6 +152,12 @@ auth:
       # -- Grafana Cloud Loki plaintext user
       user: someuser
       # -- Grafana Cloud Loki plaintext token
+      token: sometoken
+    # -- Grafana Cloud Tempo plaintext user
+    tempo:
+      # -- Grafana Cloud Tempo plaintext user
+      user: someuser
+      # -- Grafana Cloud Tempo plaintext token
       token: sometoken
   # -- Use external auth for the collectors
   external:

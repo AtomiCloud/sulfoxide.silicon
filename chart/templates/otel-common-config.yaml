@@ -10,4 +10,5 @@ data:
   TA_ENDPOINT: "{{ .Values.taEndpoint }}"
   O2_ENDPOINT: "{{ .Values.o2Endpoint }}"
   LOKI_ENDPOINT: "{{ .Values.lokiEndpoint }}"
+  TEMPO_ENDPOINT: "{{ .Values.tempoEndpoint }}"
 

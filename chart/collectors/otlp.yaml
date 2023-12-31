@@ -102,18 +102,26 @@ exporters:
     endpoint: ${env:LOKI_ENDPOINT}
     auth:
       authenticator: basicauth/loki
+  otlphttp:
+    endpoint: ${env:TEMPO_ENDPOINT}
+    auth:
+      authenticator: basicauth/tempo
 
 extensions:
   health_check:
   pprof:
   zpages:
     endpoint: 0.0.0.0:55679
+  basicauth/tempo:
+    client_auth:
+      username: ${env:TEMPO_USER}
+      password: ${env:TEMPO_PASSWORD}
   basicauth/loki:
     client_auth:
       username: ${env:LOKI_USER}
       password: ${env:LOKI_TOKEN}
 service:
-  extensions: [ health_check, pprof, zpages, basicauth/loki ]
+  extensions: [ health_check, pprof, zpages, basicauth/loki, basicauth/tempo ]
   pipelines:
     logs:
       receivers: [ otlp ]
@@ -122,7 +130,7 @@ service:
     traces:
       receivers: [ otlp ]
       processors: [ k8sattributes, resource, attributes, batch ]
-      exporters: [ otlphttp/openobserve ]
+      exporters: [ otlphttp ]
     metrics:
       receivers: [ otlp ]
       processors: [ k8sattributes, resource, attributes, batch ]
