@@ -1,3 +1,10 @@
+## [1.16.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.16.0...v1.16.1) (2023-12-31)
+
+
+### 🐛 Bug Fixes
+
+* incorrect TEMPO TOKEN ([9e84c7b](https://github.com/AtomiCloud/sulfoxide.silicon/commit/9e84c7bbd8555dd61cde113e55075b1b480e0376))
+
 ## [1.16.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.15.2...v1.16.0) (2023-12-31)
 
 
