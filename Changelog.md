@@ -1,3 +1,10 @@
+## [1.16.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.15.2...v1.16.0) (2023-12-31)
+
+
+### 🚀 New Features
+
+* migrate to traces Grafana Cloud ([c4c0c6d](https://github.com/AtomiCloud/sulfoxide.silicon/commit/c4c0c6de9718334a3f55d99acb08ec9ec2edb852))
+
 ## [1.15.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.15.1...v1.15.2) (2023-12-27)
 
 
