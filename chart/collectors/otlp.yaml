@@ -115,7 +115,7 @@ extensions:
   basicauth/tempo:
     client_auth:
       username: ${env:TEMPO_USER}
-      password: ${env:TEMPO_PASSWORD}
+      password: ${env:TEMPO_TOKEN}
   basicauth/loki:
     client_auth:
       username: ${env:LOKI_USER}
