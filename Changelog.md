@@ -1,3 +1,10 @@
+## [1.16.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.16.1...v1.16.2) (2023-12-31)
+
+
+### 🐛 Bug Fixes
+
+* use OTLP token ([7fb0cd9](https://github.com/AtomiCloud/sulfoxide.silicon/commit/7fb0cd9242d83cba12f564845d2cf725a4f0c78d))
+
 ## [1.16.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.16.0...v1.16.1) (2023-12-31)
 
 
