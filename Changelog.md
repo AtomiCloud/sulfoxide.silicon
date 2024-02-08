@@ -1,3 +1,16 @@
+## [1.17.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.16.2...v1.17.0) (2024-02-08)
+
+
+### 🚀 New Features
+
+* onyx cluster ([35d1cbe](https://github.com/AtomiCloud/sulfoxide.silicon/commit/35d1cbecdd59bb2afa4955e70633ada27acc1934))
+
+
+### 🐛 Bug Fixes
+
+* incorrect release ([7e4da1c](https://github.com/AtomiCloud/sulfoxide.silicon/commit/7e4da1c3ed1926133e561f99a013ad2e9b91abea))
+* releaser ([6120dbf](https://github.com/AtomiCloud/sulfoxide.silicon/commit/6120dbf13ab14b26d37887c272c04f4cdef4c281))
+
 ## [1.16.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.16.1...v1.16.2) (2023-12-31)
 
 
