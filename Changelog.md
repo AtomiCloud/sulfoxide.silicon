@@ -1,3 +1,10 @@
+## [1.17.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.17.0...v1.17.1) (2024-02-26)
+
+
+### 🐛 Bug Fixes
+
+* missing K8S_CLUSTER for otlp ([292b080](https://github.com/AtomiCloud/sulfoxide.silicon/commit/292b0800f61318d35335a8160b67aa99e590932c))
+
 ## [1.17.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.16.2...v1.17.0) (2024-02-08)
 
 
