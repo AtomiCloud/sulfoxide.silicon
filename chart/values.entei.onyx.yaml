@@ -23,7 +23,7 @@ apps:
           cpu: 250m
           memory: 1Gi
         requests:
-          cpu: 100m
+          cpu: 62.5m
           memory: 256Mi
       podAnnotations:
         <<: *tags
@@ -80,8 +80,8 @@ apps:
           cpu: 250m
           memory: 1Gi
         requests:
-          cpu: 50m
-          memory: 256Mi
+          cpu: 10m
+          memory: 64Mi
       podAnnotations:
         <<: *tags
 
@@ -95,8 +95,8 @@ apps:
           cpu: 250m
           memory: 1Gi
         requests:
-          cpu: 50m
-          memory: 256Mi
+          cpu: 10m
+          memory: 64Mi
       podAnnotations:
         <<: *tags
 
