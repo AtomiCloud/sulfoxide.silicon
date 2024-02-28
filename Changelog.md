@@ -1,3 +1,10 @@
+## [1.17.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.17.1...v1.17.2) (2024-02-28)
+
+
+### 🐛 Bug Fixes
+
+* request not reconcilable by ArgoCCD ([d2cd151](https://github.com/AtomiCloud/sulfoxide.silicon/commit/d2cd1519f12be42354d534d69cf1efbb4d8132f5))
+
 ## [1.17.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.17.0...v1.17.1) (2024-02-26)
 
 
