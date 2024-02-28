@@ -23,7 +23,7 @@ apps:
           cpu: 250m
           memory: 1Gi
         requests:
-          cpu: 62.5m
+          cpu: 62500u
           memory: 256Mi
       podAnnotations:
         <<: *tags
