@@ -220,6 +220,7 @@ apps:
       podAnnotations:
         <<: *tags
         atomi.cloud/module: target-allocator-collector
+        drop_log: true
       envFrom:
         - secretRef:
             name: *secretName
@@ -255,6 +256,7 @@ apps:
       podAnnotations:
         <<: *tags
         atomi.cloud/module: otlp-collector
+        drop_log: true
       envFrom:
         - secretRef:
             name: *secretName
@@ -298,6 +300,7 @@ apps:
       podAnnotations:
         <<: *tags
         atomi.cloud/module: kubelet-stats-collector
+        drop_log: true
       envFrom:
         - secretRef:
             name: *secretName
@@ -326,6 +329,7 @@ apps:
       podAnnotations:
         <<: *tags
         atomi.cloud/module: container-logs-collector
+        drop_log: true
       envFrom:
         - secretRef:
             name: *secretName
@@ -377,6 +381,7 @@ apps:
       podAnnotations:
         <<: *tags
         atomi.cloud/module: cluster-metrics-collector
+        drop_log: true
       envFrom:
         - secretRef:
             name: *secretName
@@ -408,6 +413,7 @@ apps:
       podAnnotations:
         <<: *tags
         atomi.cloud/module: cluster-events-collector
+        drop_log: true
       envFrom:
         - secretRef:
             name: *secretName
