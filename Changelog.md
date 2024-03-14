@@ -1,3 +1,10 @@
+## [1.18.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.17.2...v1.18.0) (2024-03-14)
+
+
+### 🚀 New Features
+
+* save cost by dropping silicon logs on grafana ([321ff8d](https://github.com/AtomiCloud/sulfoxide.silicon/commit/321ff8d37a54cca2b8cca1e480a56f6228f0498b))
+
 ## [1.17.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.17.1...v1.17.2) (2024-02-28)
 
 
