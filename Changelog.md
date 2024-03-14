@@ -1,3 +1,10 @@
+## [1.19.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.18.1...v1.19.0) (2024-03-14)
+
+
+### 🚀 New Features
+
+* disable k8s events to save cost ([c06a094](https://github.com/AtomiCloud/sulfoxide.silicon/commit/c06a0942bc6a26d3e367491ebda4be2ce31bff42))
+
 ## [1.18.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.18.0...v1.18.1) (2024-03-14)
 
 
