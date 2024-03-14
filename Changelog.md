@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.18.0...v1.18.1) (2024-03-14)
+
+
+### 🐛 Bug Fixes
+
+* incorrect annotation ([4cc28df](https://github.com/AtomiCloud/sulfoxide.silicon/commit/4cc28df6cdade7701735d76801574ece5c0c204a))
+
 ## [1.18.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.17.2...v1.18.0) (2024-03-14)
 
 
