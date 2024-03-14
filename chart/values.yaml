@@ -393,7 +393,7 @@ apps:
         <<: *securityContext
 
   k8s-events:
-    enable: true
+    enable: false
     collector: k8s-events.yaml
     spec:
       mode: deployment
