@@ -118,7 +118,7 @@ sulfoxide-bromine:
   storeName: *service
   # -- Secret of Secrets reference
   rootSecret:
-    name: silicon-proxy
+    name: *service
     # -- Infisical Token Reference
     ref:
       clientId: SULFOXIDE_SILICON_CLIENT_ID
