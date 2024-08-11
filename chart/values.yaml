@@ -172,7 +172,7 @@ auth:
     # -- Secret Store to use for secrets
     secretStore:
       # -- Name of the secret store
-      name: silicon
+      name: *service
       # -- Kind of the secret store, either `ClusterSecretStore` or `SecretStore`
       kind: SecretStore
     # -- External Secret Policy
