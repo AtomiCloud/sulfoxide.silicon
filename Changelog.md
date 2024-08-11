@@ -1,3 +1,10 @@
+## [1.20.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.20.1...v1.20.2) (2024-08-11)
+
+
+### 🐛 Bug Fixes
+
+* pin proxy secret to use service name ([dad568f](https://github.com/AtomiCloud/sulfoxide.silicon/commit/dad568f79b329d10bc5c4de394dad0588c63be64))
+
 ## [1.20.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.20.0...v1.20.1) (2024-08-11)
 
 
