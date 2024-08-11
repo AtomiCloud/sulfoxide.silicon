@@ -11,8 +11,12 @@ cluster: *cluster
 
 taEndpoint: entei-silicon-target-allocator-targetallocator
 
-apps:
+sulfoxide-bromine:
+  serviceTree:
+    landscape: *landscape
+    cluster: *cluster
 
+apps:
   # done
   target-allocator:
     spec:

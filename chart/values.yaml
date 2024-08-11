@@ -109,12 +109,16 @@ k8sattr:
 
 # -- Create SecretStore via secret of secrets pattern
 sulfoxide-bromine:
+  serviceTree:
+    platform: *platform
+    service: *service
   annotations:
     argocd.argoproj.io/sync-wave: "-3"
   # -- Store name to create
   storeName: silicon
   # -- Secret of Secrets reference
   rootSecret:
+    name: silicon-proxy
     # -- Infisical Token Reference
     ref:
       clientId: SULFOXIDE_SILICON_CLIENT_ID
@@ -127,21 +131,21 @@ secretAnnotation:
 # -- Auth configuration for the collectors
 auth:
   # -- Name of the secret to use for the collector
-  secretName: &secretName o2-cloud-secrets
+  secretName: &secretName observability-secrets
   # -- Remote Tokens
   remote:
     # -- OpenObserve Token
-    o2: MANUAL_O2_TOKEN
+    o2: O2_TOKEN
     loki:
       # -- Grafana Cloud Loki User
-      user: MANUAL_LOKI_USER
+      user: LOKI_USER
       # -- Grafana Cloud Loki Token
-      token: MANUAL_LOKI_TOKEN
+      token: LOKI_TOKEN
     tempo:
       # -- Grafana Cloud Tempo User
-      user: MANUAL_TEMPO_USER
+      user: TEMPO_USER
       # -- Grafana Cloud Tempo Token
-      token: MANUAL_TEMPO_TOKEN
+      token: TEMPO_TOKEN
 
   # -- Use internal auth for the collectors (hard coded password)
   internal:
@@ -168,7 +172,7 @@ auth:
     # -- Secret Store to use for secrets
     secretStore:
       # -- Name of the secret store
-      name: doppler-silicon
+      name: silicon
       # -- Kind of the secret store, either `ClusterSecretStore` or `SecretStore`
       kind: SecretStore
     # -- External Secret Policy
