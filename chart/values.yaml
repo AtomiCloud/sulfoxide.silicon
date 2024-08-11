@@ -115,7 +115,7 @@ sulfoxide-bromine:
   annotations:
     argocd.argoproj.io/sync-wave: "-3"
   # -- Store name to create
-  storeName: silicon
+  storeName: *service
   # -- Secret of Secrets reference
   rootSecret:
     name: silicon-proxy
