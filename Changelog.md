@@ -1,3 +1,15 @@
+## [1.20.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.19.0...v1.20.0) (2024-08-11)
+
+
+### 📦 Upstreams Changes
+
+* upgrade nix, helm upstream, GHA ([de80475](https://github.com/AtomiCloud/sulfoxide.silicon/commit/de80475cd9acaf74513e8d61de9d3d970b96125e))
+
+
+### 🐛 Bug Fixes
+
+* incorrect GHA runner tag from NS ([0b14044](https://github.com/AtomiCloud/sulfoxide.silicon/commit/0b14044e3c45824e5c1152a36a23820b5fdec83e))
+
 ## [1.19.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.18.1...v1.19.0) (2024-03-14)
 
 
