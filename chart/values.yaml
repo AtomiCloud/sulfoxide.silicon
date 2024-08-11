@@ -112,11 +112,13 @@ sulfoxide-bromine:
   annotations:
     argocd.argoproj.io/sync-wave: "-3"
   # -- Store name to create
-  storeName: doppler-silicon
+  storeName: silicon
   # -- Secret of Secrets reference
   rootSecret:
-    # -- DOPPLER Token Reference
-    ref: "SULFOXIDE_SILICON"
+    # -- Infisical Token Reference
+    ref:
+      clientId: SULFOXIDE_SILICON_CLIENT_ID
+      clientSecret: SULFOXIDE_SILICON_CLIENT_SECRET
 
 # -- Secret Annotations (External Secrets) to control synchronization
 secretAnnotation:
