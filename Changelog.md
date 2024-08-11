@@ -1,3 +1,10 @@
+## [1.20.1](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.20.0...v1.20.1) (2024-08-11)
+
+
+### 🐛 Bug Fixes
+
+* correctly point to secret ([ba56362](https://github.com/AtomiCloud/sulfoxide.silicon/commit/ba56362c8ea12bb0ba1b552d38aeae6deee54769))
+
 ## [1.20.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.19.0...v1.20.0) (2024-08-11)
 
 
