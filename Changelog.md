@@ -1,3 +1,10 @@
+## [1.20.3](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.20.2...v1.20.3) (2024-08-11)
+
+
+### 🐛 Bug Fixes
+
+* correctly point to store ([c15317e](https://github.com/AtomiCloud/sulfoxide.silicon/commit/c15317e6952065298971f8a403fb9d62ae3f6fbf))
+
 ## [1.20.2](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.20.1...v1.20.2) (2024-08-11)
 
 
