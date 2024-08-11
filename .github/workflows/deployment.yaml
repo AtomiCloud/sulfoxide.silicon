@@ -9,7 +9,7 @@ jobs:
     runs-on:
       - nscloud-ubuntu-22.04-amd64-4x8-with-cache
       - nscloud-cache-size-50gb
-      - nscloud-cache-tag-sulfoxide-fluorine-nix-store-cache
+      - nscloud-cache-tag-sulfoxide-silicon-nix-store-cache
       - nscloud-git-mirror-1gb
     steps:
       - uses: AtomiCloud/actions.setup-nix@v1.2.1
@@ -24,7 +24,7 @@ jobs:
     runs-on:
       - nscloud-ubuntu-22.04-amd64-4x8-with-cache
       - nscloud-cache-size-50gb
-      - nscloud-cache-tag-sulfoxide-fluorine-releaser-nix-store-cache
+      - nscloud-cache-tag-sulfoxide-silicon-releaser-nix-store-cache
       - nscloud-git-mirror-1gb
     steps:
       - uses: AtomiCloud/actions.setup-nix@v1.2.1
