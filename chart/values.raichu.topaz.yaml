@@ -1,0 +1,83 @@
+serviceTree:
+  landscape: &landscape raichu
+  cluster: &cluster topaz
+
+tags: &tags
+  atomi.cloud/landscape: *landscape
+  atomi.cloud/cluster: *cluster
+
+landscape: *landscape
+cluster: *cluster
+
+taEndpoint: raichu-silicon-target-allocator-targetallocator
+
+sulfoxide-bromine:
+  serviceTree:
+    landscape: *landscape
+    cluster: *cluster
+
+apps:
+  otlp:
+    enable: false
+
+  container-logs:
+    enable: false
+
+  target-allocator:
+    spec:
+      mode: statefulset
+      replicas: 1
+      resources:
+        limits:
+          cpu: '1'
+          memory: 1Gi
+        requests:
+          cpu: 62500u
+          memory: 256Mi
+      podAnnotations:
+        <<: *tags
+
+  kubelet-stats:
+    spec:
+      mode: daemonset
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: "0"
+          memory: "0"
+      podAnnotations:
+        <<: *tags
+
+  k8s-cluster:
+    collector: k8s-cluster.yaml
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 64Mi
+      podAnnotations:
+        <<: *tags
+
+  # done
+  k8s-events:
+    spec:
+      mode: deployment
+      replicas: 1
+      resources:
+        limits:
+          cpu: 250m
+          memory: 1Gi
+        requests:
+          cpu: 10m
+          memory: 64Mi
+      podAnnotations:
+        <<: *tags
+
+
