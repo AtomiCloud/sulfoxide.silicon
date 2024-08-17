@@ -1,3 +1,10 @@
+## [1.22.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.21.0...v1.22.0) (2024-08-17)
+
+
+### 🚀 New Features
+
+* updated opal-ruby to use infisical ([c392429](https://github.com/AtomiCloud/sulfoxide.silicon/commit/c392429353d1e1828524fdeac520d6935dc35f33))
+
 ## [1.21.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.20.3...v1.21.0) (2024-08-11)
 
 
