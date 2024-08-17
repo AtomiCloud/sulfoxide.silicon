@@ -10,8 +10,13 @@ landscape: *landscape
 cluster: *cluster
 
 taEndpoint: raichu-silicon-target-allocator-targetallocator
-apps:
 
+sulfoxide-bromine:
+  serviceTree:
+    landscape: *landscape
+    cluster: *cluster
+
+apps:
 
   otlp:
     enable: false
