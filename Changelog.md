@@ -1,3 +1,10 @@
+## [1.24.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.23.0...v1.24.0) (2024-10-02)
+
+
+### 📦 Upstreams Changes
+
+* **atominix:** ugrading to 28.0.0 ([ae8a51f](https://github.com/AtomiCloud/sulfoxide.silicon/commit/ae8a51f4fad50eaf4a2df4311691d5b3293c93ab))
+
 ## [1.23.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.22.0...v1.23.0) (2024-08-28)
 
 
