@@ -1,3 +1,11 @@
+## [1.25.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.24.0...v1.25.0) (2025-08-02)
+
+
+### 📦 Upstreams Changes
+
+* migrate to externalsecret v1 ([474afbd](https://github.com/AtomiCloud/sulfoxide.silicon/commit/474afbda1e115f15b6b569d31c7708815369165b))
+* **bromine:** to v1.8.0 ([0f2179b](https://github.com/AtomiCloud/sulfoxide.silicon/commit/0f2179b04c24d6b41d55c5277fdff7461215ab1a))
+
 ## [1.24.0](https://github.com/AtomiCloud/sulfoxide.silicon/compare/v1.23.0...v1.24.0) (2024-10-02)
 
 
